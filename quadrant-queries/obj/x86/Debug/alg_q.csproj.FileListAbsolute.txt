@@ -1,0 +1,5 @@
+D:\lab\alg_q\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\lab\alg_q\bin\Debug\alg_q.exe
+D:\lab\alg_q\bin\Debug\alg_q.pdb
+D:\lab\alg_q\obj\x86\Debug\alg_q.exe
+D:\lab\alg_q\obj\x86\Debug\alg_q.pdb
