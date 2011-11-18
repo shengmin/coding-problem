@@ -5,6 +5,9 @@
  * @author ShengMin Zhang
  * @problem Quadrant Queries
  * 
+ * @revision 3.1
+ * - wow, corrected a silly mistake :S
+ * 
  * @revision 3.0
  * Special thanks to Hanson Wang who introduced segment tree to me :)
  * - segment tree with lazy propagation
@@ -123,14 +126,27 @@ public class Solution {
 					case QueryType.XY: Type = QueryType.Y; break;
 					case QueryType.None: Type = QueryType.X; break;
 				}
-			} else if(t == QueryType.Y){
-				switch (Type) {
-					case QueryType.X: Type = QueryType.XY; break;
-					case QueryType.Y: Type = QueryType.None; break;
-					case QueryType.XY: Type = QueryType.X; break;
-					case QueryType.None: Type = QueryType.Y; break;
-				}
-			}
+            }
+            else if (t == QueryType.Y)
+            {
+                switch (Type)
+                {
+                    case QueryType.X: Type = QueryType.XY; break;
+                    case QueryType.Y: Type = QueryType.None; break;
+                    case QueryType.XY: Type = QueryType.X; break;
+                    case QueryType.None: Type = QueryType.Y; break;
+                }
+            }
+            else if (t== QueryType.XY)
+            {
+                switch (Type)
+                {
+                    case QueryType.X: Type = QueryType.Y; break;
+                    case QueryType.Y: Type = QueryType.X; break;
+                    case QueryType.XY: Type = QueryType.None; break;
+                    case QueryType.None: Type = QueryType.XY; break;
+                }
+            }
 
 		}
 
@@ -169,27 +185,6 @@ public class Solution {
 		public void Update(int start, int end, QueryType type) {
 			Update(0, start, end, type);
 		}
-
-        public void PushUpdate(int index, QueryType type)
-        {
-            var seg = segments[index];
-            seg.Transform(type);
-
-            if (seg.Start != seg.End)
-            {
-                int leftIdx = GetLeftChildIndex(index);
-                int rightIdx = GetRightChildIndex(index);
-                var left = segments[leftIdx];
-                var right = segments[rightIdx];
-
-                left.Dirty = true;
-                left.Transform(seg.Type);
-                right.Dirty = true;
-                right.Transform(seg.Type);
-            }
-
-            seg.Transform();
-        }
 
 		private void Update(int index, int start, int end, QueryType type) {
 			var seg = segments[index];
@@ -338,6 +333,8 @@ public class Solution {
 
 	private SegmentTree tree;
 
+    private int updateCount = 0;
+
 	private void Solve(Query query) {
 		int start = query.Start;
 		int end = query.End;
@@ -349,6 +346,7 @@ public class Solution {
 			Console.WriteLine(string.Format("{0} {1} {2} {3}", count[0], count[1], count[2], count[3]));
 
 		} else {
+            updateCount++;
 			tree.Update(start, end, type);
 			//tree.Print();
 		}
