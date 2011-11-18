@@ -1,7 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <StartArguments>1.in</StartArguments>
-    <StartWorkingDirectory>D:\lab\alg_q\</StartWorkingDirectory>
+    <StartArguments>13.in</StartArguments>
+    <StartWorkingDirectory>C:\code\quadrant-queries\</StartWorkingDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <StartWorkingDirectory>C:\code\quadrant-queries\</StartWorkingDirectory>
+    <StartArguments>13.in</StartArguments>
   </PropertyGroup>
 </Project>

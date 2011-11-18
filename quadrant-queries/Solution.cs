@@ -111,6 +111,8 @@ public class Solution {
 					Swap(Quadrant.Second, Quadrant.Forth);
 					break;
 			}
+            Type = QueryType.None;
+            Dirty = false;
 		}
 
 		public void Transform(QueryType t) {
@@ -133,7 +135,7 @@ public class Solution {
 		}
 
 		public override string ToString() {
-			 return string.Format("{6} : {0} - {1} : {2} {3} {4} {5} : {7}", Start, End, count[0], count[1], count[2], count[3], Type, Dirty);
+			 return string.Format("{0} - {1} : {2} {3} {4} {5} : {7} : {6}", Start, End, count[0], count[1], count[2], count[3], Type, Dirty);
 		}
 	}
 
@@ -142,6 +144,15 @@ public class Solution {
 	private sealed class SegmentTree {
 		public delegate void Count(int[] count, int index);
 
+		public void Print(){
+			Console.WriteLine("-----------------------------------");
+			foreach(var seg in segments){
+				if(seg != null) Console.WriteLine(seg);
+			}
+			
+			Console.WriteLine("-----------------------------------");
+		}
+		
 		public SegmentTree(int N, Count fn){
 			int size = (int)Math.Ceiling(2 * Math.Pow(2, Math.Log(N, 2) + 1));
 			segments = new Segment[size];
@@ -159,47 +170,92 @@ public class Solution {
 			Update(0, start, end, type);
 		}
 
+        public void PushUpdate(int index, QueryType type)
+        {
+            var seg = segments[index];
+            seg.Transform(type);
+
+            if (seg.Start != seg.End)
+            {
+                int leftIdx = GetLeftChildIndex(index);
+                int rightIdx = GetRightChildIndex(index);
+                var left = segments[leftIdx];
+                var right = segments[rightIdx];
+
+                left.Dirty = true;
+                left.Transform(seg.Type);
+                right.Dirty = true;
+                right.Transform(seg.Type);
+            }
+
+            seg.Transform();
+        }
+
 		private void Update(int index, int start, int end, QueryType type) {
 			var seg = segments[index];
+			
+			//Console.WriteLine(seg);
+			
+			if(seg.Start == seg.End){
+				// elementary segment, at leaf
+				seg.Transform(type);
+				seg.Transform();
+				return;
+			}
+			
 			int leftIdx = GetLeftChildIndex(index);
 			int rightIdx = GetRightChildIndex(index);
-			var left = leftIdx < segments.Length ? segments[leftIdx] : null;
-			var right = rightIdx < segments.Length ? segments[rightIdx] : null;
-
+			var left = segments[leftIdx];
+			var right = segments[rightIdx];
+			
 			if (seg.Start == start && seg.End == end) {
-				seg.Transform(type);
-			}
+				// current segment covers the exact range, stops here, push update to both children
+				//seg.Dirty = false;
+                seg.Transform(type);
 
-			if (seg.Dirty || seg.Start == start && seg.End == end) {
-				// push update to its children
-				seg.Dirty = false;
+                left.Dirty = true;
+                left.Transform(seg.Type);
+                right.Dirty = true;
+                right.Transform(seg.Type);
 
-				if (left != null) {
-					left.Dirty = true;
-					left.Transform(seg.Type);
-				}
-
-				if (right != null) {
-					right.Dirty = true;
-					right.Transform(seg.Type);
-				}
-			}
-
-			if (seg.Start == start && seg.End == end) {
-				seg.Transform();
-				seg.Type = QueryType.None;
-
+                seg.Transform();
+                //PushUpdate(index, type);
+				
 				return;
 			}
 
-			if (start <= left.End) Update(leftIdx, start, left.End, type);
-			if (end >= right.Start) Update(rightIdx, right.Start, end, type);
+            // propagate the transformation to both children
+            left.Transform(seg.Type);
+            right.Transform(seg.Type);
+            seg.Dirty = false;
+            seg.Type = QueryType.None;
+
+            if (start <= left.End)
+            {
+                Update(leftIdx, start, Math.Min(end, left.End), type);
+            }
+            else
+            {
+                Update(leftIdx, left.Start, left.End, QueryType.None);
+            }
+
+            if (end >= right.Start)
+            {
+                Update(rightIdx, Math.Max(start, right.Start), end, type);
+            }
+            else
+            {
+                Update(rightIdx, right.Start, right.End, QueryType.None);
+            }
+
 
 			for (Quadrant q = Quadrant.First; q <= Quadrant.Forth; q++) {
 				seg[q] = left[q] + right[q];
 			}
 
-			seg.Type = QueryType.None;
+            
+
+			//seg.Type = QueryType.None;
 		}
 
 		public int[] Query(int start, int end) {
@@ -226,8 +282,8 @@ public class Solution {
 			var left = segments[leftIdx];
 			var right = segments[rightIdx];
 
-			if (start <= left.End) Query(leftIdx, start, left.End, count);
-			if (end >= right.Start) Query(rightIdx, right.Start, end, count);
+            if (start <= left.End) Query(leftIdx, start, Math.Min(end, left.End), count);
+            if (end >= right.Start) Query(rightIdx, Math.Max(start, right.Start), end, count);
 		}
 
 		private void Initialize(int index, int start, int end){
@@ -294,6 +350,7 @@ public class Solution {
 
 		} else {
 			tree.Update(start, end, type);
+			//tree.Print();
 		}
 	}
 
@@ -316,7 +373,7 @@ public class Solution {
 		for (; Q > 0; Q--) {
 			Solve(ParseQuery(rd));
 		}
-		int a = 0;
+		//int a = 0;
 		//Console.ReadKey();
 	}
 

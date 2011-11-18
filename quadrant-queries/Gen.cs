@@ -19,8 +19,8 @@ public class Solution {
 		Console.WriteLine(Q);
 		for(int i = 0; i < Q; i++){
 			string type = "";
-			if(i % M == 0) type = "C";
-			else if(i % 2 == 0) type = "X";
+			if(i % 2 == 0) type = "C";
+			else if(i % 4 == 1) type = "X";
 			else type = "Y";
 			
 			int left = rand.Next(1, N + 1);
