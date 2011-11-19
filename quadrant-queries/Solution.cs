@@ -5,6 +5,9 @@
  * @author ShengMin Zhang
  * @problem Quadrant Queries
  * 
+ * @revision 3.2
+ * - optimization
+ * 
  * @revision 3.1
  * - wow, corrected a silly mistake :S
  * 
@@ -48,34 +51,10 @@ public class Solution {
 		C
 	}
 
-	private struct Coordinate {
-		public Coordinate(int x, int y)
-			: this() {
-			this.X = x;
-			this.Y = y;
-		}
-
-		public int X { get; private set; }
-		public int Y { get; private set; }
-	}
-
-	private struct Query {
-		public Query(QueryType type, int start, int end) : this() {
-			this.Type = type;
-			this.Start = start;
-			this.End = end;
-		}
-
-		public QueryType Type { get; private set; }
-		public int Start { get; private set; }
-		public int End { get; private set; }
-	}
-
 	private sealed class Segment {
 		public Segment(int start, int end) {
 			this.Start = start;
 			this.End = end;
-			this.Dirty = false;
 			this.Type = QueryType.None;
 		}
 
@@ -85,12 +64,12 @@ public class Solution {
 			get { return this.count; }
 		}
 		public QueryType Type { get; set; }
-		public bool Dirty { get; set; }
 		public int Start { get; private set; }
 		public int End { get; private set; }
-		public int this[Quadrant q] {
-			get { return count[(int)q]; }
-			set { count[(int)q] = value; }
+
+		public int this[int i] {
+			get { return count[i]; }
+			set { count[i] = value; }
 		}
 
 		private void Swap(Quadrant i, Quadrant j) {
@@ -114,73 +93,67 @@ public class Solution {
 					Swap(Quadrant.Second, Quadrant.Forth);
 					break;
 			}
-            Type = QueryType.None;
-            Dirty = false;
+			Type = QueryType.None;
 		}
 
-		public void Transform(QueryType t) {
-			if (t == QueryType.X) {
-				switch (Type) {
-					case QueryType.X: Type = QueryType.None; break;
-					case QueryType.Y: Type = QueryType.XY; break;
-					case QueryType.XY: Type = QueryType.Y; break;
-					case QueryType.None: Type = QueryType.X; break;
-				}
-            }
-            else if (t == QueryType.Y)
-            {
-                switch (Type)
-                {
-                    case QueryType.X: Type = QueryType.XY; break;
-                    case QueryType.Y: Type = QueryType.None; break;
-                    case QueryType.XY: Type = QueryType.X; break;
-                    case QueryType.None: Type = QueryType.Y; break;
-                }
-            }
-            else if (t== QueryType.XY)
-            {
-                switch (Type)
-                {
-                    case QueryType.X: Type = QueryType.Y; break;
-                    case QueryType.Y: Type = QueryType.X; break;
-                    case QueryType.XY: Type = QueryType.None; break;
-                    case QueryType.None: Type = QueryType.XY; break;
-                }
-            }
+		private static QueryType[,] tb = new QueryType[4,4];
 
+		static Segment() {
+			for (QueryType t1 = QueryType.X; t1 <= QueryType.None; t1++) {
+				for (QueryType t2 = QueryType.X; t2 <= QueryType.None; t2++) {
+					tb[(int)t1, (int)t2] = Transform(t1, t2);
+				}
+			}
+		}
+
+		public void Transform(QueryType type) {
+			Type = tb[(int)type, (int)Type];
+		}
+
+		private static QueryType Transform(QueryType t1, QueryType t2) {
+			if (t1 == QueryType.X) {
+				switch (t2) {
+					case QueryType.X: return QueryType.None; 
+					case QueryType.Y: return QueryType.XY; 
+					case QueryType.XY: return QueryType.Y; 
+					case QueryType.None: return QueryType.X; 
+				}
+			} else if (t1 == QueryType.Y) {
+				switch (t2) {
+					case QueryType.X: return QueryType.XY; 
+					case QueryType.Y: return QueryType.None; 
+					case QueryType.XY: return QueryType.X; 
+					case QueryType.None: return QueryType.Y; 
+				}
+			} else if (t1 == QueryType.XY) {
+				switch (t2) {
+					case QueryType.X: return QueryType.Y; 
+					case QueryType.Y: return QueryType.X; 
+					case QueryType.XY: return QueryType.None; 
+					case QueryType.None: return QueryType.XY; 
+				}
+			}
+
+			return t2;
 		}
 
 		public override string ToString() {
-			 return string.Format("{0} - {1} : {2} {3} {4} {5} : {7} : {6}", Start, End, count[0], count[1], count[2], count[3], Type, Dirty);
+			return string.Format("{0} - {1} : {2} {3} {4} {5} : {6}", Start, End, count[0], count[1], count[2], count[3], Type);
 		}
 	}
 
-	
-
 	private sealed class SegmentTree {
 		public delegate void Count(int[] count, int index);
-
-		public void Print(){
-			Console.WriteLine("-----------------------------------");
-			foreach(var seg in segments){
-				if(seg != null) Console.WriteLine(seg);
-			}
-			
-			Console.WriteLine("-----------------------------------");
-		}
-		
-		public SegmentTree(int N, Count fn){
-			int size = (int)Math.Ceiling(2 * Math.Pow(2, Math.Log(N, 2) + 1));
-			segments = new Segment[size];
-			this.fn = fn;
-			Initialize(0, 1, N);
-		}
-
 		private Segment[] segments;
 		private Count fn;
 
-		private int GetRightChildIndex(int i){ return 2 * i + 1; }
-		private int GetLeftChildIndex(int i){ return 2 * i + 2; }
+		public SegmentTree(int N, Count fn) {
+			segments = new Segment[270000]; // for this particular question, it can't go beyond this size
+			this.fn = fn;
+			Initialize(0, 1, N);
+		}
+		private int GetRightChildIndex(int i) { return 2 * i + 1; }
+		private int GetLeftChildIndex(int i) { return 2 * i + 2; }
 
 		public void Update(int start, int end, QueryType type) {
 			Update(0, start, end, type);
@@ -188,69 +161,51 @@ public class Solution {
 
 		private void Update(int index, int start, int end, QueryType type) {
 			var seg = segments[index];
-			
-			//Console.WriteLine(seg);
-			
-			if(seg.Start == seg.End){
+
+			if (seg.Start == seg.End) {
 				// elementary segment, at leaf
 				seg.Transform(type);
 				seg.Transform();
 				return;
 			}
-			
+
 			int leftIdx = GetLeftChildIndex(index);
 			int rightIdx = GetRightChildIndex(index);
 			var left = segments[leftIdx];
 			var right = segments[rightIdx];
-			
+
 			if (seg.Start == start && seg.End == end) {
 				// current segment covers the exact range, stops here, push update to both children
-				//seg.Dirty = false;
-                seg.Transform(type);
+				seg.Transform(type);
 
-                left.Dirty = true;
-                left.Transform(seg.Type);
-                right.Dirty = true;
-                right.Transform(seg.Type);
+				left.Transform(seg.Type);
+				right.Transform(seg.Type);
 
-                seg.Transform();
-                //PushUpdate(index, type);
-				
+				seg.Transform();
+
 				return;
 			}
 
-            // propagate the transformation to both children
-            left.Transform(seg.Type);
-            right.Transform(seg.Type);
-            seg.Dirty = false;
-            seg.Type = QueryType.None;
+			// propagate the transformation to both children
+			left.Transform(seg.Type);
+			right.Transform(seg.Type);
+			seg.Type = QueryType.None;
 
-            if (start <= left.End)
-            {
-                Update(leftIdx, start, Math.Min(end, left.End), type);
-            }
-            else
-            {
-                Update(leftIdx, left.Start, left.End, QueryType.None);
-            }
-
-            if (end >= right.Start)
-            {
-                Update(rightIdx, Math.Max(start, right.Start), end, type);
-            }
-            else
-            {
-                Update(rightIdx, right.Start, right.End, QueryType.None);
-            }
-
-
-			for (Quadrant q = Quadrant.First; q <= Quadrant.Forth; q++) {
-				seg[q] = left[q] + right[q];
+			if (start <= left.End) {
+				Update(leftIdx, start, Math.Min(end, left.End), type);
+			} else {
+				Update(leftIdx, left.Start, left.End, QueryType.None);
 			}
 
-            
+			if (end >= right.Start) {
+				Update(rightIdx, Math.Max(start, right.Start), end, type);
+			} else {
+				Update(rightIdx, right.Start, right.End, QueryType.None);
+			}
 
-			//seg.Type = QueryType.None;
+			for (int i = 0; i < 4; i++ ) {
+				seg[i] = left[i] + right[i];
+			}
 		}
 
 		public int[] Query(int start, int end) {
@@ -261,13 +216,13 @@ public class Solution {
 
 		private void Query(int index, int start, int end, int[] count) {
 			Segment seg = segments[index];
-			if (seg.Dirty) {
+			if (seg.Type != QueryType.None) {
 				Update(index, start, end, QueryType.None);
 			}
 
 			if (seg.Start == start && seg.End == end) {
-				for (Quadrant q = Quadrant.First; q <= Quadrant.Forth; q++) {
-					count[(int)q] += seg[q];
+				for (int i = 0; i < 4; i++ ) {
+					count[i] += seg[i];
 				}
 				return;
 			}
@@ -277,14 +232,14 @@ public class Solution {
 			var left = segments[leftIdx];
 			var right = segments[rightIdx];
 
-            if (start <= left.End) Query(leftIdx, start, Math.Min(end, left.End), count);
-            if (end >= right.Start) Query(rightIdx, Math.Max(start, right.Start), end, count);
+			if (start <= left.End) Query(leftIdx, start, Math.Min(end, left.End), count);
+			if (end >= right.Start) Query(rightIdx, Math.Max(start, right.Start), end, count);
 		}
 
-		private void Initialize(int index, int start, int end){
+		private void Initialize(int index, int start, int end) {
 			Segment seg = new Segment(start, end);
 			segments[index] = seg;
-			if(start == end){
+			if (start == end) {
 				fn(seg.Count, start);
 				return;
 			}
@@ -296,19 +251,13 @@ public class Solution {
 
 			Segment left = segments[leftIdx];
 			Segment right = segments[rightIdx];
-			for(Quadrant q = Quadrant.First; q <= Quadrant.Forth; q++){
-				seg[q] = left[q] + right[q];
+			for (int i = 0; i < 4; i++ ) {
+				seg[i] = left[i] + right[i];
 			}
 		}
 	}
 
-	private Coordinate[] points;
-	private int N = 0;
-
-	private Quadrant FindQuadrant(Coordinate coord) {
-		int x = coord.X;
-		int y = coord.Y;
-
+	private Quadrant FindQuadrant(int x, int y) {
 		if (x > 0 && y > 0) return Quadrant.First;
 		if (x < 0 && y < 0) return Quadrant.Third;
 		if (x > 0) return Quadrant.Forth;
@@ -316,62 +265,39 @@ public class Solution {
 		return Quadrant.Second;
 	}
 
-	private Query ParseQuery(TextReader rd) {
-		string[] ln = rd.ReadLine().Split(' ');
-		string t = ln[0];
-		QueryType type = QueryType.C;
-		if (t == "X") type = QueryType.X;
-		else if (t == "Y") type = QueryType.Y;
-
-		return new Query(type, int.Parse(ln[1]), int.Parse(ln[2]));
-	}
-
-	private Coordinate ParseCoordinate(TextReader rd) {
-		string[] parts = rd.ReadLine().Split(' ');
-		return new Coordinate(int.Parse(parts[0]), int.Parse(parts[1]));
-	}
-
-	private SegmentTree tree;
-
-    private int updateCount = 0;
-
-	private void Solve(Query query) {
-		int start = query.Start;
-		int end = query.End;
-		QueryType type = query.Type;
-
+	private void Solve(int start, int end, QueryType type) {
 		if (type == QueryType.C) {
-
 			int[] count = tree.Query(start, end);
 			Console.WriteLine(string.Format("{0} {1} {2} {3}", count[0], count[1], count[2], count[3]));
-
 		} else {
-            updateCount++;
 			tree.Update(start, end, type);
-			//tree.Print();
 		}
 	}
 
-	private void Count(int[] count, int index){
-		count[(int)FindQuadrant(points[index])] = 1;
+	private void Count(int[] count, int index) {
+		string[] ln = rd.ReadLine().Split(' ');
+		Quadrant q = FindQuadrant(int.Parse(ln[0]), int.Parse(ln[1]));
+		count[(int)q] = 1;
 	}
+
+	private TextReader rd;
+	private SegmentTree tree;
+	private int N = 0;
 
 	private void Run(TextReader rd) {
-		// start
 		N = int.Parse(rd.ReadLine());
-		points = new Coordinate[N + 1];
-
-		for (int i = 1; i <= N; i++) {
-			points[i] = ParseCoordinate(rd);
-		}
-
+		this.rd = rd;
 		tree = new SegmentTree(N, Count);
 
 		int Q = int.Parse(rd.ReadLine());
 		for (; Q > 0; Q--) {
-			Solve(ParseQuery(rd));
+			string[] ln = rd.ReadLine().Split(' ');
+			var t = ln[0];
+			QueryType type = QueryType.C;
+			if (t == "X") type = QueryType.X;
+			else if (t == "Y") type = QueryType.Y;
+			Solve(int.Parse(ln[1]), int.Parse(ln[2]), type);
 		}
-		//int a = 0;
 		//Console.ReadKey();
 	}
 
@@ -381,5 +307,4 @@ public class Solution {
 		new Solution().Run(rd);
 	}
 }
-
 

@@ -8,3 +8,8 @@ C:\code\quadrant-queries\bin\Debug\alg_q.pdb
 C:\code\quadrant-queries\obj\x86\Debug\ResolveAssemblyReference.cache
 C:\code\quadrant-queries\obj\x86\Debug\alg_q.exe
 C:\code\quadrant-queries\obj\x86\Debug\alg_q.pdb
+D:\ws\code\quadrant-queries\obj\x86\Debug\alg_q.exe
+D:\ws\code\quadrant-queries\obj\x86\Debug\alg_q.pdb
+D:\ws\code\quadrant-queries\bin\Debug\alg_q.exe
+D:\ws\code\quadrant-queries\bin\Debug\alg_q.pdb
+D:\ws\code\quadrant-queries\obj\x86\Debug\ResolveAssemblyReference.cache
