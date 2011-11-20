@@ -1,4 +1,10 @@
-﻿using System;
+﻿/**
+ * @problem Permutation Game
+ * @author ShengMin Zhang
+ * @summary Recursion with memorization
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;

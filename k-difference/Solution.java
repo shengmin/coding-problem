@@ -1,3 +1,9 @@
+/**
+ * @problem K Difference
+ * @author ShengMin Zhang
+ * @summary A very common interview question
+ */
+
 import java.io.*;
 import java.util.*;
 

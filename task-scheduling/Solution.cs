@@ -1,4 +1,10 @@
-﻿using System;
+﻿/**
+ * @problem Task Scheduling
+ * @author ShengMin Zhang
+ * @summary Greedy solution
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;

@@ -1,3 +1,9 @@
+/**
+ * @problem String Reduction
+ * @author ShengMin Zhang
+ * @summary Need to find a pattern
+ */
+
 import java.io.*;
 import java.util.*;
 

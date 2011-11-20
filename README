@@ -1,0 +1,4 @@
+This is my personal code repository, which contains my solutions to some algorithm problems I solved.
+Please do not copy and paste my solutions if you happen to be stuck on those algorithm problems.
+
+My coding style when solving an algorithm problem is drastically different from when writing an actual application. Maintainability and reusability is not my primary goal when coding up a solution to an algorithm problem, especially during a timed contest.
