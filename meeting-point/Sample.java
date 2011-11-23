@@ -64,6 +64,8 @@
 		
 		for(int i = 0; i < N; i++){
 			long d = solve(points[i]);
+			//System.out.printf("%s : %d", points[i].toString(), d);
+			//System.out.println();
 			// System.out.println(d);
 			if(d < min) {
 				min = d;

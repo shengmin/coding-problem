@@ -3,7 +3,7 @@
  * @author ShengMin Zhang
  *
  * @revision 1.0
- * - sort based on the distance to the median, search until first point that's non-decreasing in total time
+ * - median point is the meeting point
  */
  
  import java.io.*;
@@ -30,17 +30,15 @@
 		}
 	}
  
-	Point[] xsorted;
-	Point[] ysorted;
-	int N;
+	Point[] points;
  
 	long solve(Point meeting) {
 		long d = 0;
 		
 		// System.out.println("------------------------------");
 		
-		for(int i = N - 1; i >= 0; i--){
-			Point p = xsorted[i];
+		for(int i = 0; i < points.length; i++){
+			Point p = points[i];
 			if(p == meeting) continue;
 			int t = p.computeTime(meeting);
 			// System.out.println(t);
@@ -51,19 +49,30 @@
 	}
  
 	void run(BufferedReader rd) throws Exception {
-		N = Integer.parseInt(rd.readLine());
-		xsorted = new Point[N];
-		ysorted = new Point[N];
+		int N = Integer.parseInt(rd.readLine());
+		points = new Point[N];
+		
+		Point[] xsorted = new Point[N];
+		Point[] ysorted = new Point[N];
+		
+		int minX = Integer.MAX_VALUE;
+		int maxY = Integer.MIN_VALUE;
 		
 		for(int i = 0; i < N; i++) {
 			StringTokenizer st = new StringTokenizer(rd.readLine());
 			int x = Integer.parseInt(st.nextToken());
 			int y = Integer.parseInt(st.nextToken());
 			
-			Point p = new Point(x, y);
-			xsorted[i] = p;
-			ysorted[i] = p;
+			if(x < minX) minX = x;
+			if(y > maxY) maxY = y;
+			
+			points[i] = new Point(x, y);
+			xsorted[i] = points[i];
+			ysorted[i] = points[i];
 		}
+		
+		final int MIN_X = minX;
+		final int MAX_Y = maxY;
 		
 		Arrays.sort(xsorted, new Comparator<Point>(){
 			public int compare(Point a, Point b){
@@ -76,47 +85,57 @@
 				return a.y - b.y;
 			}
 		});
-	
-		int mid = N / 2;
-		double xmedian = 0.0;
-		double ymedian = 0.0;
 		
-		if(N % 2 == 0) {
-			xmedian = (xsorted[mid].x + xsorted[mid - 1].x) / 2;
-			ymedian = (ysorted[mid].y + ysorted[mid - 1].y) / 2;
-		} else {
-			xmedian = xsorted[mid].x;
-			ymedian = ysorted[mid].y;
-		}
 		
-		final double X_MEDIAN = xmedian;
-		final double Y_MEDIAN = ymedian;
-		
-		Arrays.sort(xsorted, new Comparator<Point>(){
+		Arrays.sort(points, new Comparator<Point>() {
+			@Override
 			public int compare(Point a, Point b){
-				double axdiff = (a.x > X_MEDIAN) ? a.x - X_MEDIAN : X_MEDIAN - a.x;
-				double aydiff = (a.y > Y_MEDIAN) ? a.y - Y_MEDIAN : Y_MEDIAN - a.y;
-				double adiff = Math.max(axdiff, aydiff);
+				int aXDiff = a.x - MIN_X;
+				int aYDiff = MAX_Y - a.y;
 				
-				double bxdiff = (b.x > X_MEDIAN) ? b.x - X_MEDIAN : X_MEDIAN - b.x;
-				double bydiff = (b.y > Y_MEDIAN) ? b.y - Y_MEDIAN : Y_MEDIAN - b.y;
-				double bdiff = Math.max(bxdiff, bydiff);
+				int bXDiff = b.x - MIN_X;
+				int bYDiff = MAX_Y - b.y;
 				
-				if(adiff < bdiff) return -1;
-				else if(adiff == bdiff) return 0;
-				else return 1;
+				return Math.max(aXDiff, aYDiff) - Math.max(bXDiff, bYDiff);
 			}
 		});
 		
+		
+		
+		
+		//long min = 0;
+		
+		// if(N == 1) {
+			// min = solve(points[0]);
+		// } else if(N == 0){
+			// return;
+		// } else if(N % 2 == 0) {
+			// System.out.println(points[N/2]);
+			// System.out.println(points[N/2-1]);
+			// min = Math.min(solve(points[N/2]), solve(points[N/2 - 1]));
+		// } else {
+			// System.out.println(points[N/2]);
+			// min = solve(points[N/2]);
+		// }
+		
+		
 		long min = Long.MAX_VALUE;
-		for(Point p: xsorted){
-			long d = solve(p);
-			if(d <= min) min = d;
-			else break;
-			// System.out.printf("%s : %d", p.toString(), d);
-			// System.out.println();
+		
+		for(int i = 0; i < N; i++){
+			long d = solve(xsorted[i]);
+			System.out.println(xsorted[i]);
+			if(d < min) min = d;
 		}
+		
+		System.out.println("--------------------------");
+		for(int i = 0; i < N; i++){
+			long d = solve(ysorted[i]);
+			System.out.println(ysorted[i]);
+			if(d < min) min = d;
+		}
+		
 		System.out.println(min);
+		
 	}
  
 	public static void main(String[] args) throws Exception {
