@@ -146,13 +146,13 @@ public class CubeSolution {
 	
 	boolean check() {
 		for(int j = 0; j < 4; j++) {
-			Set<Color> seen = EnumSet.noneOf(Color.class);
+			boolean[] seen = new boolean[4];
 			for(int i = cubes.length - 1; i >= 0; i--) {
 				Color color = cubes[i].colors[j];
-				if(seen.contains(color)) {
+				if(seen[color.ordinal()]) {
 					return false;
 				} else {
-					seen.add(color);
+					seen[color.ordinal()] = true;
 				}
 			}
 		}
