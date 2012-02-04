@@ -10,7 +10,7 @@
  * 
  * Estimated time: 
  * less than 1s because each cube has at most 2*3*4 = 24 possible arrangments, there are 4 cubes, so 4 * 24 = 96 combinations
- * there are 4! ways to stack those 4 cubes for any given combination, so 4! * 96 = 2304 possibilities to examinate, which is much smaller than 10^7, so should be able to complete in <1s
+ * there are 4! ways to stack those 4 cubes for any given combination, so 4! * 96 = 2304 possibilities to consider, which is much smaller than 10^7, so should be able to complete in <1s
  * 
  * Actual time: less than 2s probably because of printing, duplicate checking, copying, and initialization of enum set
  *
@@ -160,7 +160,7 @@ public class CubeSolution {
 		return true;
 	}
 	
-	void permutate(int level) {
+	void permute(int level) {
 		if(level == cubes.length) {
 			rotateCubes(0);
 			return;
@@ -173,7 +173,7 @@ public class CubeSolution {
 			
 			indices[level] = i;
 			usedIndex[i] = true;
-			permutate(level+1);
+			permute(level+1);
 			usedIndex[i] = false;
 		}
 	}
@@ -206,7 +206,7 @@ public class CubeSolution {
 	void run() throws Exception {
 		// initial set up
 		pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
-		permutate(0);
+		permute(0);
 		pw.close();
 	}
 
