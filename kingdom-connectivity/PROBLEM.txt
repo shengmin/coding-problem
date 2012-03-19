@@ -1,0 +1,51 @@
+Kingdom Connectivity(20 points)
+
+It has been a prosperous year for King Charles and he is rapidly expanding his kingdom.A beautiful new kingdom has been recently constructed and in this kingdom there are many cities connected by a number of one-way roads.Two cities may be directly connected by more than one roads, this is to ensure high connectivity.
+
+In this new kingdom King Charles has made one of the cities at his financial capital and one as warfare capital and he wants high connectivity between these two capitals.The connectivity of a pair of cities say city A and city B is defined as the number of different paths from city A to city B. A path may use a road more than once if possible. Two paths are considered different if they do not use exactly the same sequence of roads.
+
+There are N cities numbered 1 to N in the new kingdom and M one-way roads  . City 1 is the monetary capital and city N is the warfare capital.
+
+You being one of the best programmers in new kingdom need to answer the connectivity of financial capital and warfare capital ,i.e number of different paths from city 1 to city N.
+
+Input Description:
+
+First line contains two integers N and M.
+
+Then follow M lines ,each having two integers say x and y, 1<=x,y<=N , indicating there is a road from city x to city y.
+
+Output Description:
+
+Print the number of different paths from city 1 to city N modulo 1,000,000,000(10^9).If there are infinitely many different paths print "INFINITE PATHS"(quotes are for clarity).
+
+Sample Input:
+
+5 5
+1 2
+2 4
+2 3
+3 4
+4 5
+
+Sample Output:
+
+2
+
+Sample Input:
+
+5 5
+1 2
+4 2
+2 3
+3 4
+4 5
+
+Sample Output:
+
+INFINITE PATHS
+
+Constraints:
+
+2<=N<=10,000(10^4)
+
+1<=M<=1,00,000(10^5) 
