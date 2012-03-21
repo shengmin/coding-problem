@@ -34,6 +34,14 @@ public struct Natural {
 		return n1.val % n2.val;
 	}
 	
+	public static bool operator == (Natural n1, Natural n2) {
+		return n1.val == n2.val;
+	}
+	
+	public static bool operator != (Natural n1, Natural n2) {
+		return n1.val != n2.val;
+	}
+	
 	public static implicit operator Natural(int v) {
 		return new Natural(v);
 	}
@@ -54,8 +62,12 @@ public class City {
 	
 	public City(int id) {
 		Id = id;
-		PathCount = 0;
+		PathCount = -2;
 		Neighbours = new LinkedList<City>();
+	}
+	
+	public bool HasValue(){
+		return PathCount != -2;
 	}
 	
 	public void Add(City c) {
@@ -116,6 +128,8 @@ public class Solution {
 	}
 	
 	Natural CountPath(City city) {
+		if(city.HasValue()) return city.PathCount;
+	
 		if(visited[city]) {
 			// a cycle
 			foreach(City c in visitedCities) {
@@ -133,12 +147,14 @@ public class Solution {
 		
 		Natural totalCount = city == lastCity ? 1 : 0;
 		foreach(City n in neighbours) {
-			totalCount += CountPath(n);
+			totalCount = (totalCount + CountPath(n)) % MOD;
 			if(totalCount.IsInfinity()) break;
 		}
 		
 		visitedCities.Pop();
 		visited[city] = false;
+		
+		city.PathCount = totalCount;
 		
 		return totalCount;
 	}
