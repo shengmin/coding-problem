@@ -1,5 +1,8 @@
 /**
  * @author ShengMin Zhang
+ *
+ * @revision 1.1
+ * - save computed results
  * @revision 1.0
  * - DFS
  */
@@ -100,6 +103,7 @@ public class Solution {
 	readonly Natural MOD = 1000000000;
 	bool[] visited; 
 	bool[] visited2;
+	int[] reachabletb;
 	Stack<City> visitedCities;
 	City[] cities;
 	City firstCity, lastCity;
@@ -110,6 +114,9 @@ public class Solution {
 	bool IsReachable(City city, City to) {
 		if(city == to) return true; // reach the destination city
 		if(visited2[city]) return false; // a cycle;
+		int result = reachabletb[city];
+		if(result == 1) return true;
+		else if(result == -1) return false;
 		
 		visited2[city] = true;
 		
@@ -123,7 +130,7 @@ public class Solution {
 		}
 		
 		visited2[city] = false;
-		
+		reachabletb[city] = anyReachable ? 1 : -1;
 		return anyReachable;
 	}
 	
@@ -168,6 +175,7 @@ public class Solution {
 		visited2 = new bool[N + 1];
 		visitedCities = new Stack<City>(N);
 		cities = new City[N + 1];
+		reachabletb = new int[N + 1];
 		
 		for(int i = N; i > 0; i--) {
 			City c = new City(i);
