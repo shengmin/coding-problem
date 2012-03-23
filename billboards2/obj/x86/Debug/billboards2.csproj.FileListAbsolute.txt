@@ -1,0 +1,5 @@
+D:\code\billboards2\bin\Debug\billboards2.exe
+D:\code\billboards2\bin\Debug\billboards2.pdb
+D:\code\billboards2\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\code\billboards2\obj\x86\Debug\billboards2.exe
+D:\code\billboards2\obj\x86\Debug\billboards2.pdb

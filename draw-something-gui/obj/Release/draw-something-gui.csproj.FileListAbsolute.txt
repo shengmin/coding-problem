@@ -1,0 +1,15 @@
+D:\code\draw-something-gui\bin\Release\DrawSomethingHelper.exe.config
+D:\code\draw-something-gui\bin\Release\DrawSomethingHelper.exe.manifest
+D:\code\draw-something-gui\bin\Release\DrawSomethingHelper.application
+D:\code\draw-something-gui\bin\Release\DrawSomethingHelper.exe
+D:\code\draw-something-gui\bin\Release\DrawSomethingHelper.pdb
+D:\code\draw-something-gui\obj\Release\ResolveAssemblyReference.cache
+D:\code\draw-something-gui\obj\Release\ShengMin.DrawSomethingHelper.MainForm.resources
+D:\code\draw-something-gui\obj\Release\ShengMin.DrawSomethingHelper.Properties.Resources.resources
+D:\code\draw-something-gui\obj\Release\ResGen.read.1.tlog
+D:\code\draw-something-gui\obj\Release\ResGen.write.1.tlog
+D:\code\draw-something-gui\obj\Release\DrawSomethingHelper.TrustInfo.xml
+D:\code\draw-something-gui\obj\Release\DrawSomethingHelper.exe.manifest
+D:\code\draw-something-gui\obj\Release\DrawSomethingHelper.application
+D:\code\draw-something-gui\obj\Release\DrawSomethingHelper.exe
+D:\code\draw-something-gui\obj\Release\DrawSomethingHelper.pdb

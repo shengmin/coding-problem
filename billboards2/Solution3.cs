@@ -26,7 +26,6 @@
 	int N, K;
 	int[] boards;
 	Cell[] dp;
-	bool[] removed;
  
 	KeyValuePair<int, int> findMin(int start, int end) {
 		// key is the index of min
@@ -40,10 +39,9 @@
 				minIndex = i;
 			}
 		}
-		removed[minIndex] = true;
+		
 		return new KeyValuePair<int, int>(minIndex, min);
 	}
- 
  
 	void Run(TextReader rd) {
 		string[] ln = rd.ReadLine().Split(' ');
@@ -52,7 +50,6 @@
 		
 		boards = new int[N + 1];
 		dp = new Cell[N + 1];
-		removed = new bool[N + 1];
 		
 		for(int i = 1; i <= N; i++) {
 			boards[i] = int.Parse(rd.ReadLine());

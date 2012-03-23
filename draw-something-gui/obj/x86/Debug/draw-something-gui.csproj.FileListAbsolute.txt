@@ -1,0 +1,8 @@
+D:\code\draw-something-gui\bin\Debug\DrawSomethingHelper.exe
+D:\code\draw-something-gui\bin\Debug\DrawSomethingHelper.pdb
+D:\code\draw-something-gui\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\code\draw-something-gui\obj\x86\Debug\ShengMin.DrawSomething.Properties.Resources.resources
+D:\code\draw-something-gui\obj\x86\Debug\ResGen.read.1.tlog
+D:\code\draw-something-gui\obj\x86\Debug\ResGen.write.1.tlog
+D:\code\draw-something-gui\obj\x86\Debug\DrawSomethingHelper.exe
+D:\code\draw-something-gui\obj\x86\Debug\DrawSomethingHelper.pdb
