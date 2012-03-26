@@ -15,7 +15,6 @@ public class Gen {
 		for(int i = 0; i < N; i++) {
 			writer.println(rand.nextInt(20));
 		}
-		
 		writer.close();
 	}
 }	

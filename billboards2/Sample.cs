@@ -42,18 +42,7 @@
 		}
 		
 		long best = 0;
-		if(without == with) {
-			Print(true, iBoard);
-			best = with;
-		} else if(without < with) {
-			Print(true, iBoard);
-			best = with;
-		} else {
-			Print(false, iBoard);
-			best = without;
-		}
-		
-		row[nBoard] = best;
+		row[nBoard] = best = Math.Max(with, without);
 		
 		return best;
 		
@@ -73,7 +62,6 @@
 		
 		long max = Dfs(1, 0);
 		Console.WriteLine(max);
-		Console.Error.WriteLine(boards.Sum());
 	}
  
 	public static void Main(string[] args) {

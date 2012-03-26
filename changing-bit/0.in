@@ -1,0 +1,8 @@
+5 5
+00000
+11111
+set_a 0 1
+get_c 5
+get_c 1
+set_b 2 0
+get_c 5
