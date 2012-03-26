@@ -8,13 +8,14 @@
  * - greedy
  */
  
- using System;
- using System.IO;
- using System.Collections.Generic;
+using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
  
  public class Solution {
 	int N, K;
-	int[] boards;
+	IList<int> boards;
 	long[] best;
 	long[] lastBest;
 	int[] bestIndices;
@@ -45,16 +46,19 @@
 		string[] ln = rd.ReadLine().Split(' ');
 		N = int.Parse(ln[0]);
 		K = int.Parse(ln[1]);
-		
-		boards = new int[N + 1];
+
+		boards = new List<int>(N + 1);
 		best = new long[K + 1];
 		lastBest = new long[K + 1];
 		bestIndices = new int[K + 1];
-		
+		boards.Add(0);
+
 		for(int i = 1; i <= N; i++) {
-			boards[i] = int.Parse(rd.ReadLine());
+			int board = int.Parse(rd.ReadLine());
+			if (board != 0) boards.Add(board);
 		}
 
+		N = boards.Count - 1;
 		
 		for (int j = 0, jj = K + 1; j < N ; j = jj, jj += K + 1) {
 			long blockSum = Sum(j + 1, jj);
