@@ -60,7 +60,7 @@
 			long blockSum = Sum(j + 1, jj);
 			int iBoard = jj;
 			bestIndices[K] = K;
-			best[K] = blockSum - ((iBoard <= N) ? boards[iBoard] : 0);
+			best[K] = lastBest[K] + blockSum - ((iBoard <= N) ? boards[iBoard] : 0);
 
 			for(int i = K - 1; i >= 0; i--) {
 				iBoard = j + i + 1;
