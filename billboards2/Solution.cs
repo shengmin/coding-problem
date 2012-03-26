@@ -12,19 +12,33 @@
  using System.IO;
  using System.Collections.Generic;
  
- 
- 
-
- 
  public class Solution {
 	int N, K;
 	int[] boards;
-	long[][] cols = new long[2][];
- 
+	long[] best;
+	long[] lastBest;
+	int[] bestIndices;
+
 	void Swap() {
-		long[] a = cols[0];
-		cols[0] = cols[1];
-		cols[1] = a;
+		long[] x = best;
+		best = lastBest;
+		lastBest = x;
+	}
+
+	long Sum(int start, int end) {
+		long sum = 0L;
+		for(int i = start; i <= end && i <= N; i++) {
+			sum += boards[i];
+		}
+		return sum;
+	}
+	
+	long FindMax(int start, int end) {
+		long max = -1;
+		for(int i = start; i <= end; i++) {
+			if (lastBest[i] > max) max = lastBest[i];
+		}
+		return max;
 	}
 	
 	void Run(TextReader rd) {
@@ -33,40 +47,33 @@
 		K = int.Parse(ln[1]);
 		
 		boards = new int[N + 1];
-		long[] col = cols[0] = new long[K + 1];
-		cols[1] = new long[K + 1];
+		best = new long[K + 1];
+		lastBest = new long[K + 1];
+		bestIndices = new int[K + 1];
 		
 		for(int i = 1; i <= N; i++) {
 			boards[i] = int.Parse(rd.ReadLine());
 		}
+
 		
-		long sum = 0; // sum up last K
-		int start = N;
-		
-		for(int i = K; i > 0; i--, start--) {
-			sum += boards[start];
-		}
-		
-		col[K] = sum;
-		
-		for(int i = K - 1, j = 1; i >= 0; i--, j++) {
-			col[i] = Math.Max(col[i + 1], sum + boards[start] - boards[j + start]);
-		}
-		
-		for(int j = start - 1; j > 0; j--) {
-			long[] pre = cols[0];
-			long[] cur = cols[1];
-			cur[K] = pre[0];
-			int board = boards[j];
-		
+		for (int j = 0, jj = K + 1; j < N ; j = jj, jj += K + 1) {
+			long blockSum = Sum(j + 1, jj);
+			int iBoard = jj;
+			bestIndices[K] = K;
+			best[K] = blockSum - ((iBoard <= N) ? boards[iBoard] : 0);
+
 			for(int i = K - 1; i >= 0; i--) {
-				cur[i] = Math.Max(pre[0], board + pre[i + 1]);
+				iBoard = j + i + 1;
+				long localSum = blockSum - ((iBoard <= N) ? boards[iBoard] : 0);
+				int localBestIndex = bestIndices[i + 1];
+				if (lastBest[i] > lastBest[localBestIndex]) localBestIndex = i;
+				best[i] = lastBest[localBestIndex] + localSum;
+				bestIndices[i] = localBestIndex;
 			}
-			
+
 			Swap();
 		}
-	
-		Console.WriteLine(cols[0][0]);
+		Console.WriteLine(FindMax(0, K));
 	}
  
 	public static void Main(string[] args) {
