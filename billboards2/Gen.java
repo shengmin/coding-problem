@@ -13,7 +13,7 @@ public class Gen {
 		writer.println();
 		
 		for(int i = 0; i < N; i++) {
-			writer.println(rand.nextInt(20));
+			writer.println(rand.nextInt(20) + 1);
 		}
 		writer.close();
 	}
