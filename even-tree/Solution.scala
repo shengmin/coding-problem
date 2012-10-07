@@ -1,33 +1,44 @@
 /**
  * @author ShengMin Zhang
- * @revision 1.0
- * - Store the number of nodes in each subtree
- * - Recursion with memorization to store whether a node can be decomposed into components containing even number of nodes
+ * @problem Even Tree
  */
  
-import java.util.{List => _, _}
+import java.util.{List => _, LinkedHashSet => _, Set => _, _}
 import java.io._
-import scala.collection.immutable._
+import scala.collection.mutable._
 
-class Edge(val left: Node, val right: Node)
+class Edge(left: Node, right: Node) {
+  def remove(): Unit = {
+    left.neighbors -= right
+    right.neighbors -= left
+  }
+  
+  def canBeRemoved(): Boolean = {
+    (left.countNodes(right) % 2 == 0) && (right.countNodes(left) % 2 == 0)
+  }
+}
 
 class Node(val id: Int) {
-  var children: List[Node] = Nil
-  /** Number of nodes in the tree */
-  var nodeCount = 1
+  val neighbors: Set[Node] = new LinkedHashSet
+
+  def countNodes(): Int = countNodes(null)
   
-  def countNodes(): Int = {
-    for(child <- children) nodeCount += child.countNodes()
-    return nodeCount
+  def print(): Unit = {
+    printf("node %d: ", id)
+    for(neighbor <- neighbors) {
+      printf("%d ", neighbor.id)
+    }
+    println
   }
   
-  def printTree(): Unit = {
-    System.err.println(toString())
-    for(child <- children) child.printTree()
+  def countNodes(parent: Node): Int = {
+    var count = 1
+    for(neighbor <- neighbors) {
+      if(neighbor != parent) count += neighbor.countNodes(this)
+    }
+    count
   }
   
-  override def toString() = 
-    "id: %d, nodeCount: %d".format(id, nodeCount)
 }
 
 class Solver {
@@ -46,29 +57,21 @@ class Solver {
   
     for(i <- 0 until M) {
       st = new StringTokenizer(rd.readLine())
-      // Pick the smaller one as the parent so we can use 1 as the root
-      val u = Integer.parseInt(st.nextToken())
-      val v = Integer.parseInt(st.nextToken())
-      var parentIndex = 0
-      var childIndex = 0
-      if(u < v) {
-        parentIndex = u
-        childIndex = v
-      } else {
-        parentIndex = v
-        childIndex = u
-      }
+      val nodeAId = Integer.parseInt(st.nextToken())
+      val nodeBId = Integer.parseInt(st.nextToken())
+      val nodeA = nodes(nodeAId)
+      val nodeB = nodes(nodeBId)
       
-      val parent = nodes(parentIndex)
-      parent.children = nodes(childIndex) :: parent.children
-      edges(i) = new Edge(nodes(u), nodes(v))
+      nodeA.neighbors += nodeB
+      nodeB.neighbors += nodeA
+      edges(i) = new Edge(nodeA, nodeB)
     }
     
-    nodes(1).countNodes()
     var removedEdgeCount = 0
     for(edge <- edges) {
-      if(edge.left.nodeCount % 2 == 0 && edge.right.nodeCount % 2 == 0) {
+      if(edge.canBeRemoved) {
         removedEdgeCount += 1
+        edge.remove
       }
     }
     
