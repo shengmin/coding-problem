@@ -1,0 +1,45 @@
+Meeting Point (50 Points)
+ 
+There is an infinite integer grid at which N people have their houses on. They decide to unite at a common meeting place, which is someone's house. 
+From any given cell, all 8 adjacent cells are reachable in 1 unit of time. 
+eg: (x,y) can be reached from (x-1,y+1) in a single unit of time.
+Find a common meeting place which minimises the sum of the travel times of all the persons.
+
+Input Format:
+N
+The following N lines will contain two integers saying the x & y coordinate of the i-th person.
+
+Output Format:
+M M = min sum of all travel times; 
+
+
+Constraints:
+N <= 10^5
+The absolute value of each co-ordinate in the input will be atmost 109
+
+
+HINT: Please use long long 64-bit integers;
+
+Input #00:
+4
+0 1
+2 5
+3 1
+4 0
+
+Output #00:
+8
+
+Explanation: Sums of travel times of the houses are 11, 13, 8 and 10. 8 is the minimum.
+Input #01:
+6
+12 -14
+-3 3
+-14 7
+-14 -3
+2 -12
+-1 -6
+Output #01:
+54
+Note: Java/C# code should be in a class named "Solution"
+Read input from STDIN and write output to STDOUT
