@@ -4,7 +4,7 @@
  * @revision 1.0
  * - Find the centroid of the set of points
  * - Sort the points by the distance to the centroid
- * - Start trying from the first point as the meeting point until a point whose distance sum is greater than the previous sum 
+ * - Start trying from the first point as the meeting point until some limit
  */
 
 import java.io._
@@ -14,6 +14,11 @@ import scala.math._
  
 case class Point(x: Int, y: Int) {
   def distanceTo(that: Point): Int = max(abs(x - that.x), abs(y - that.y))
+  def euclideanDistanceTo(that: Point): Double = {
+    val xDiff: Double = x - that.x
+    val yDiff: Double = y - that.y
+    sqrt(xDiff * xDiff + yDiff * yDiff)
+  }
 }
  
 class Solver {
@@ -23,20 +28,20 @@ class Solver {
   
   def findMinDistanceSum: Long = {
     var minDistanceSum = Long.MaxValue
-    for(meetingPoint <- points) {
+    for(i <- 0 until min(1000, N)) {
+      val meetingPoint = points(i)
       var distanceSum: Long = 0
       
       for(point <- points) {
         distanceSum += meetingPoint.distanceTo(point)
       }
       
-      if(distanceSum > minDistanceSum) {
-        return minDistanceSum
-      } else {
+      if(distanceSum < minDistanceSum) {
         minDistanceSum = distanceSum
       }
     }
-    return minDistanceSum
+    
+    minDistanceSum
   }
   
   def solve: Unit = {
@@ -54,7 +59,7 @@ class Solver {
     
     val centroid = Point(xSum / N, ySum / N)
     object PointOrdering extends Ordering[Point] {
-      def compare(a: Point, b: Point): Int = a.distanceTo(centroid) - b.distanceTo(centroid) 
+      def compare(a: Point, b: Point): Int = a.euclideanDistanceTo(centroid) compareTo b.euclideanDistanceTo(centroid)
     }
     Sorting.quickSort(points)(PointOrdering)
     
