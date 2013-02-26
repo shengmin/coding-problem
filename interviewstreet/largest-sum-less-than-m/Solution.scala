@@ -70,7 +70,7 @@ object Solution {
     for (i <- 1 to max) {
       table(i)(i) = 1
       for (j <- i - 1 to 1 by -1) {
-        table(i)(j) = table(i)(j + 1) + table(i - j)(j)
+        table(i)(j) = (table(i)(j + 1) + table(i - j)(j)) % 1000000007
       }
     }
     
