@@ -1,0 +1,27 @@
+You are given n positive integers: d[0], d[1], …, d[n-1] and k and M.
+
+Task 1: Choose k numbers from the n integers and output Z, the largest sum of the chosen numbers strictly lower than M. Formally S = d[p[0]] + d[p[1]] + … + d[p[k]], Z = max{S | S < M}
+
+Task 2: Output P(Z), the number of possible partitions of Z. Since P(Z) can be large, output it modulo 1000000007.
+
+Input
+n k M
+d[0] d[1] … d[n - 1]
+
+Output
+Z
+P(Z)
+
+Constraints
+Z > 0
+0 < k <= n < 100
+M < 2000
+0 < d[i] < 100
+
+Sample Input
+3 2 5
+2 1 3
+
+Sample Output
+4
+5
