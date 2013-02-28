@@ -1,0 +1,55 @@
+A robot is using sticks to build two sides of a rectangle. Unfortunately, there are some bugs in the robot’s code, which is causing it to act rather randomly. You need to calculate the expected area of the rectangle the robot will build.
+
+There are n sticks which are ordered as s[0], s[1],…,s[n - 1] where s[i] is the height of the ith stick. The robot will use the sticks in the order in which it’s kept to build the two sides of a rectangle (W * H). If both sides are not greater than a threshold (R), this rectangle is called elegant.
+
+The robot builds the rectangle by adding sticks together in 2 stages: It first builds the width completely, and then starts building the height. The rules are as follows:
+
+Stage 1 - Width
+Beginning with s[0], the robot examines each stick. If it likes it, it uses this stick to build the width (W) of the rectangle. Otherwise, it chucks the stick in the garbage. Each stick the robot examines has a 50% chance of being liked/used.
+
+After taking or chucking each stick, the robot thinks about moving on to stage 2. Each time it faces this decision, there is a 50% chance it will move to stage 2.
+
+Quit Building Rule
+If W>R or if all the sticks have been used up, the robot will stop building, since it will be impossible to get a elegant rectangle. In such a case, the area of the rectangle will be 0. This rule will also apply if the robot goes on to stage 2 when W=0.
+
+Stage 2 - Height
+The robot then begins building the rectangle’s height (H). It will randomly shuffle the remaining sticks, and one-by-one add them to H. The robot will stop building H when adding the next stick will cause H>R or if it uses up all the sticks.
+
+Input
+The input will consist of 3 lines:
+n - the number of sticks.
+s[0], s[1], … s[n - 1] - The lengths of each stick.
+R - the upperbound length of each side.
+
+Output
+Output the expected area of the rectangle when the robot stops building. Failed attempts will have an area of 0. The answer will be considered correct if the absolute or relative error doesn’t exceed 1e-3.
+
+Constraints
+2 <= n <= 50
+0 < R, s[i] <= 50
+
+Sample Input
+3 
+1 2 3
+3
+
+Sample Output
+1.750000
+
+Explanation
+There are 4 possible elegant rectangles that can be built. This is a chart of their probabilities, P(R), and expected values, EV:
+
+Rectangle	 P(R)	 E.V.
+1 * 2	1/8	4/16
+1 * 3	 1/8+1/16	9/16
+2 * 3	1/16	6/16
+(1+2) * 3	1/16	9/16
+The total is 28/16 = 1.75.
+
+To build the first rectangle, the robot chooses stick-1 (length: 1) and jumps to stage-2. This has a probability of 1/2 * 1/2, In stage-2, the probability of choosing stick-2 (length:2) is 1/2 since there are two sticks (stick-2 & stick-3) and equally probable. Hence the overall probability of building the first rectangle is 1/2 * 1/2 * 1/2 = 1/8. The expected value is 2 * 1/8 = 1/4
+
+It’s written as 4/16 for clarity when adding the EV’s of all the rectangles
+
+For the second rectangle, one of the possibilities is choose stick-1 at step-1 and stick-3 at step-2 which gives the probability to be 1/8 (or) choose stick-1 at step-1 and keep it (1/2), not jump to step-2 (1/2), choose stick-2 at step-1 and chuck it (1/2), jump to step-2 (1/2) and choose stick-3 at step-2 (1)
+
+Total probability is 1/8 + 1/16
