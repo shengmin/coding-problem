@@ -1,0 +1,21 @@
+There is a N * N matrix. At first you are at the upper left corner (0,0) and you want to get to the lower right corner (N - 1, N - 1). You can only walk down and right.
+
+Futhermore, you can not pass the main diagonal. This means that you can only walk in the upper half or lower half of the matrix (including the diagonal).
+
+Please calcuate How many ways can you get to the end point?
+
+Input
+
+The test case contains only one interger N. (1 <= N <= 2000)
+
+Output
+
+Output the number of the number of ways you can get to the lower right corner without passing the diagonal in a single line. Since the result may be very large, just output the remainder of the answer divided by 10007 please.
+
+Sample Input
+
+4
+
+Sample Output
+
+10
