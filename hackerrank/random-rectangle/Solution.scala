@@ -13,8 +13,10 @@ object Solution {
   }
   
   val R = reader.readLine().trim().toInt
-  val widthTable = HashMap.empty[Int, MutableList[(Int, Int, Double)]]
+  val widthTable = HashMap.empty[Long, MutableList[(Int, Int, Double)]]
   val heightTable = HashMap.empty[Long, MutableList[(Int, Int, Double)]]
+  
+  def emptyList = MutableList.empty[(Int, Int, Double)]
   
   def log[E](a: Array[Array[E]]) {
     for (row <- a) {
@@ -25,6 +27,82 @@ object Solution {
       println()
     }
   }
+  
+  def solveWidthStage(
+      usedStickSet: BitSet, 
+      width: Int, 
+      height: Int,
+      probability: Double): MutableList[(Int, Int, Double)] = {
+      
+    val key = usedStickSet.toLongArray()(0)
+    return widthTable.get(key) match {
+      case Some(x) => x
+      case None => {
+        if (width > R) {
+          return emptyList
+        }
+    
+        val stickId = usedStickSet.nextClearBit(0)
+        if (stickId >= N) {
+          return MutableList((width, height, probability))
+        }
+        
+        val list = emptyList
+        val newWidth = width + sticks(stickId)
+        val newUsedStickSet = usedStickSet.clone().asInstanceOf[BitSet]
+        val newProbability = probability * 0.25D
+        newUsedStickSet.set(stickId)
+        
+        // Take the stick, and stay
+        list ++= solveWidthStage(newUsedStickSet, newWidth, height, newProbability)
+        
+        // Take the stick, and go to height stage
+        list ++= solveHeightStage(newUsedStickSet.clone().asInstanceOf[BitSet], newWidth, height, newProbability)
+        
+        // Eat the stick, and stay
+        list ++= solveWidthStage(newUsedStickSet.clone().asInstanceOf[BitSet], width, height, newProbability)
+        
+        // Eat the stick, and go to height stage
+        list ++= solveHeightStage(newUsedStickSet.clone().asInstanceOf[BitSet], width, height, newProbability)
+        
+        widthTable(key) = list
+        list
+      }
+    }
+  }
+  
+  def solveHeightStage(usedStickSet: BitSet, width: Int, height: Int, probability: Double): MutableList[(Int, Int, Double)] = {
+    val key = usedStickSet.toLongArray()(0)
+    return heightTable.get(key) match {
+      case Some(x) => x
+      case None => {
+        if (height > R || width > R) {
+          return emptyList
+        }
+      
+        val stickCount = N - usedStickSet.cardinality()
+        if (stickCount == 0) {
+          return MutableList((width, height, probability))
+        }
+        
+        val list = emptyList
+        var stickId = usedStickSet.nextClearBit(0)
+        
+        while (stickId < N) {
+          val newUsedStickSet = usedStickSet.clone().asInstanceOf[BitSet]
+          newUsedStickSet.set(stickId)
+          
+          list ++= solveHeightStage(newUsedStickSet, width, height + sticks(stickId), probability / stickCount)
+          
+          stickId = usedStickSet.nextClearBit(stickId + 1)
+        }
+        
+        heightTable(key) = list
+        list
+      }
+    }
+  }
+  
   
   def solveWidthStage(usedSticks: BitSet, stickId: Int): MutableList[(Int, Int, Double)] = {
     return widthTable.get(stickId) match {
@@ -83,7 +161,7 @@ object Solution {
           newUsedSticks.set(i)
           
           for ((w, h, p) <- solveHeightStage(newUsedSticks, stickCount - 1)) {
-            val newHeight = h + sticks(stickId)
+            val newHeight = h + sticks(i)
             if (newHeight <= R) list += ((w, newHeight, p / stickCount))
           }
           
@@ -98,7 +176,9 @@ object Solution {
   
   def main(a: Array[String]) {
     var area = 0.0D
-    val list = solveWidthStage(new BitSet(N), 0)
+    val usedStickSet = new BitSet(N)
+    usedStickSet.set(N)
+    val list = solveWidthStage(usedStickSet, 0, 0, 1.0D)
     for ((w, h, p) <- list) {
       area = area + w * h * p
     }
