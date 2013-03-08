@@ -1,0 +1,36 @@
+How many ways can use integers from 1 to n to make a matrix, such that in each row from left to right the numbers are increasing and in each column from top to bottom the numbers are also increasing.
+
+For example If n = 4 there are 4 such matrices. Namely
+
+(1)
+
+   1 2 3 4
+(2)
+
+   1 2
+   3 4
+(3)
+
+   1 3
+   2 4
+(4)
+
+    1
+    2
+    3
+    4
+Input
+
+Only one interger N in a single line(1 <= N <= 109).
+
+Output
+
+The number of matrices in a single line. Since the result can be very large, output the remainder of it divied by 10007.
+
+Sample Input
+
+4
+
+Sample Output
+
+4
