@@ -16,49 +16,44 @@ object Solution {
   val papers = nextArray(M)
 
   def main(arguments: Array[String]) {
-    // Sort both arrays
-    // For a paper with value a, pick the next available printer whose ability value is just >= a using binary search
-    // If no such printer available, wait for all printers to complete, ie. add one more seconds
+    // Binary search for the answers
 
-    var time = 0
-    var printerIndex = 0
-    var paperIndex = 0
-    while (paperIndex < M) {
-      find(papers(paperIndex), printerIndex, printerIndex, N) match {
-        case Some(capablePrinterIndex) => {
-          printerIndex = capablePrinterIndex + 1
-          paperIndex += 1
-        }
-        case None => {
-          printerIndex = 0
-          time += 1
-        }
+    var seconds = 1
+    var min = 1
+    var max = M + 1
+
+    while (min < max) {
+      val mid = min + (max - min) / 2
+      if (isValid(mid)) {
+        seconds = mid
+        max = mid
+      } else {
+        min = mid + 1
       }
     }
 
-    println(time + 1)
+    println(seconds)
     //printArray(printers)
     //printArray(papers)
   }
 
   /**
-   * Gets the index of the printer that should print the current paper
+   * Checks if all printers can print all papers in {@link seconds}
    */
-  private def find(paper: Int, zero: Int, start: Int, end: Int): Option[Int] = {
-    if (start >= end) return None;
-    val mid = start + (end - start) / 2;
-    val printer = printers(mid);
+  private def isValid(seconds: Int): Boolean = {
+    var paperIndex = 0
+    var printerIndex = 0
 
-    if (printer < paper) {
-      return find(paper, zero, mid + 1, end);
-    } else {
-      // Current printer is capable of printing this paper
-      if (mid == zero || printers(mid - 1) < paper) {
-        return Some(mid);
-      } else {
-        return find(paper, zero, start, mid);
+    while (printerIndex < N && paperIndex < M) {
+      var paperCount = 0
+      while (paperCount < seconds && paperIndex < M && printers(printerIndex) >= papers(paperIndex)) {
+        paperCount += 1
+        paperIndex += 1
       }
+      printerIndex += 1
     }
+
+    return if (paperIndex >= M) true else false
   }
 
   private def printArray[@specialized(Int) T](array: Array[T]) {
