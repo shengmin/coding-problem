@@ -1,6 +1,5 @@
 import java.io.{FileReader, Reader, BufferedReader, InputStreamReader}
 import java.util.StringTokenizer
-import scala.collection.mutable
 import scala.math.max
 
 object Solution {
@@ -13,33 +12,30 @@ object Solution {
       val st = new StringTokenizer(rd.readLine())
       val N = st.nextToken().toInt
       val M = st.nextToken().toInt
-      val table = mutable.HashMap.empty[(Int, Int), Int]
-      val smallestEnd = N / 2 + 1
+      println(solve(Array.ofDim[Int](N + 1, M + 1), N, M, 1, 1))
+    }
 
-      def solve(index: Int, startNum: Int): Int = {
-        if (index == M) {
-          return N - max(smallestEnd, startNum) + 1
-        }
-
-        val key = (index, startNum)
-        table.get(key) match {
-          case Some(ans) => return ans
-          case None => {
-            var count = 0
-
-            for (num <- startNum to N) {
-              val twoTimes = num * 2
-              val nextStartNum = if (twoTimes > N) 1 else twoTimes
-              count = (count + solve(index + 1, nextStartNum)) % mod
-            }
-
-            table(key) = count
-            return count
-          }
-        }
+    def solve(table: Array[Array[Int]], N: Int, M: Int, index: Int, startNum: Int): Int = {
+      if (index == M) {
+        return N - max(N / 2 + 1, startNum) + 1
       }
 
-      println(solve(1, 1))
+      var count = table(startNum)(index)
+      if (count > 0) {
+        return count
+      }
+
+      var num = startNum
+
+      while (num <= N) {
+        val twoTimes = num * 2
+        val nextStartNum = if (twoTimes > N) 1 else twoTimes
+        count = (count + solve(table, N, M, index + 1, nextStartNum)) % mod
+        num += 1
+      }
+
+      table(startNum)(index) = count
+      return count
     }
   }
 
