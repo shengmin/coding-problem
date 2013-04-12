@@ -1,21 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="05632a2e-beb7-4c4a-9e7b-971b0c802107" name="Default" comment="">
-      <change type="DELETED" beforePath="D:\project\problem\hackerrank\alien-languages\Solution.scala" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hackerrank/alien-languages/0.in" afterPath="$PROJECT_DIR$/hackerrank/alien-languages/0.in" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hackerrank/alien-languages/README" afterPath="$PROJECT_DIR$/hackerrank/alien-languages/README" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/ant.xml" afterPath="$PROJECT_DIR$/.idea/ant.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="05632a2e-beb7-4c4a-9e7b-971b0c802107" name="Default" comment="" />
     <ignored path="problem.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="05632a2e-beb7-4c4a-9e7b-971b0c802107" time="1365747538746" ignored="false" />
     <file path="/Sample.scala" changelist="05632a2e-beb7-4c4a-9e7b-971b0c802107" time="1365748320772" ignored="false" />
     <file path="/a.scala" changelist="05632a2e-beb7-4c4a-9e7b-971b0c802107" time="1362730362394" ignored="false" />
     <file path="/fragment.java" changelist="05632a2e-beb7-4c4a-9e7b-971b0c802107" time="1365747767991" ignored="false" />
-    <file path="/Solution.scala" changelist="05632a2e-beb7-4c4a-9e7b-971b0c802107" time="1365747607784" ignored="false" />
+    <file path="/Solution.scala" changelist="05632a2e-beb7-4c4a-9e7b-971b0c802107" time="1365748672614" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +89,16 @@
       <file leaf-file-name="Sample.scala" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/hackerrank/alien-languages/Sample.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="21" selection-start="1086" selection-end="1086" vertical-scroll-proportion="0.0">
+            <state line="55" column="1" selection-start="0" selection-end="1531" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Solution.scala" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/hackerrank/alien-languages/Solution.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="33" selection-start="570" selection-end="570" vertical-scroll-proportion="0.40246046">
               <folding />
             </state>
           </provider>
@@ -111,10 +113,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="0.in" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="0.in" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/hackerrank/alien-languages/0.in">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="0" selection-start="20" selection-end="20" vertical-scroll-proportion="0.14059754">
+            <state line="4" column="0" selection-start="20" selection-end="20" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -139,10 +141,10 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/hackerrank/how-many-matrices/src/Sample.scala" />
-        <option value="$PROJECT_DIR$/hackerrank/alien-languages/Solution.scala" />
         <option value="$PROJECT_DIR$/hackerrank/alien-languages/README" />
         <option value="$PROJECT_DIR$/hackerrank/alien-languages/Sample.scala" />
         <option value="$PROJECT_DIR$/hackerrank/alien-languages/0.in" />
+        <option value="$PROJECT_DIR$/hackerrank/alien-languages/Solution.scala" />
       </list>
     </option>
   </component>
@@ -369,7 +371,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1050" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -388,7 +390,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23159018" sideWeight="0.6730769" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32692307" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32692307" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -523,16 +525,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hackerrank/alien-languages/Sample.scala">
+    <entry file="file://$PROJECT_DIR$/hackerrank/alien-languages/0.in">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="21" selection-start="1086" selection-end="1086" vertical-scroll-proportion="0.0">
+        <state line="4" column="0" selection-start="20" selection-end="20" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hackerrank/alien-languages/0.in">
+    <entry file="file://$PROJECT_DIR$/hackerrank/alien-languages/Sample.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="0" selection-start="20" selection-end="20" vertical-scroll-proportion="0.14059754">
+        <state line="55" column="1" selection-start="0" selection-end="1531" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hackerrank/alien-languages/Solution.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="33" selection-start="570" selection-end="570" vertical-scroll-proportion="0.40246046">
           <folding />
         </state>
       </provider>
