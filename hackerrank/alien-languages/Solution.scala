@@ -21,7 +21,11 @@ object Solution {
 
       // smallAccTable(i)(j) = # of ways we can place i small chars and end with any char up to and including char j
       val smallAccTable = Array.ofDim[Int](maxBlockSize, bigStart);
-      smallAccTable(0)(0) = 1
+      // there is one way to place any number of chars of size 0
+      for (i <- 0 until bigStart) {
+        smallAccTable(0)(i) = 1
+      }
+
       for (i <- 1 until maxBlockSize) {
         for (j <- 1 until bigStart) {
           smallAccTable(i)(j) = (smallAccTable(i)(j - 1) + smallAccTable(i - 1)(j / 2)) % mod
