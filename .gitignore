@@ -3,3 +3,5 @@
 *.class
 *.o
 *.hi
+
+.idea/workspace.xml
