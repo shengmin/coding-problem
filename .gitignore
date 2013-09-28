@@ -1,8 +1,15 @@
+# .NET
 *.exe
 *.pdb
+*.dll
+
+# Java
 *.class
+
+# C/C++
 *.o
 *.hi
 
+# IDEA
 .idea/workspace.xml
 out
