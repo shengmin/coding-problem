@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/hackerrank/alien-languages/alien-languages.iml" filepath="$PROJECT_DIR$/hackerrank/alien-languages/alien-languages.iml" />
-      <module fileurl="file://$PROJECT_DIR$/hackerrank/how-many-matrices/how-many-matrices.iml" filepath="$PROJECT_DIR$/hackerrank/how-many-matrices/how-many-matrices.iml" />
-      <module fileurl="file://$PROJECT_DIR$/codility/p1/p1.iml" filepath="$PROJECT_DIR$/codility/p1/p1.iml" />
-      <module fileurl="file://$PROJECT_DIR$/codility/p2/p2.iml" filepath="$PROJECT_DIR$/codility/p2/p2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/coding-problem.iml" filepath="$PROJECT_DIR$/coding-problem.iml" />
     </modules>
   </component>
 </project>

@@ -1,1 +1,2 @@
-This is my public code repository, which primarily contains my solutions to some algorithm problems I solved.
+# This repository contains solutions to the coding problems I have solved.
+- [HackerRank](https://www.hackerrank.com/‎)
