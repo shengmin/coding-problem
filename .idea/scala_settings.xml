@@ -48,6 +48,13 @@
         <option value="scala.collection.mutable._" />
       </array>
     </option>
+    <option name="intInjectionMapping">
+      <map>
+        <entry key="xml" value="XML" />
+      </map>
+    </option>
+    <option name="showArgumentsToByNameParams" value="true" />
+    <option name="sortImports" value="true" />
   </component>
 </project>
 
