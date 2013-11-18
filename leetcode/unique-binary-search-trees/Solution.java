@@ -9,7 +9,7 @@ public class Solution {
   public int numTrees(int n) {
     int[] table = new int[n + 1];
 
-    table[0] = 0;
+    table[0] = 1;
     table[1] = 1;
 
     for (int i = 2; i <= n; i++) {
@@ -17,8 +17,7 @@ public class Solution {
       for (int j = 1; j <= i; j++) {
         int left = j - 1;
         int right = i - j;
-        if (left == right) sum += table[left];
-        else sum += table[left] + table[right];
+        sum += table[left] * table[right];
       }
 
       table[i] = sum;
