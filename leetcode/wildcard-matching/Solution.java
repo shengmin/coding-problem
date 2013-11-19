@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Solution {
   public static void main(String[] args) {
     Solution s = new Solution();
@@ -8,40 +10,60 @@ public class Solution {
     System.out.println(s.isMatch("aa", "a*"));
     System.out.println(s.isMatch("aa", "?*"));
     System.out.println(s.isMatch("aab", "c*a*b"));
+    System.out.println(s.isMatch("", "*"));
+    System.out.println(s.isMatch("c", "*?*"));
+    System.out.println(s.isMatch("a", ""));
+    System.out.println(s.isMatch("ho", "**ho"));
+  }
+
+  private int countText(String pattern) {
+    int count = 0;
+    for (int i = pattern.length() - 1; i >= 0; i--) {
+      char c = pattern.charAt(i);
+      if (c != '*') count++;
+    }
+    return count;
   }
 
   public boolean isMatch(String text, String pattern) {
     int textSize = text.length();
     int patternSize = pattern.length();
-    boolean[][] table = new boolean[patternSize + 1][textSize + 1];
-    table[0][0] = true;
+    int nonStarCount = countText(pattern);
+    if (nonStarCount > textSize) return false;
+
+    boolean[] row = new boolean[textSize + 1];
+    boolean[] oldRow = new boolean[textSize + 1];
+    boolean[] any = new boolean[textSize + 1];
+    boolean[] oldAny = new boolean[textSize + 1];
+    Arrays.fill(oldAny, true);
+    Arrays.fill(any, true);
+    oldRow[0] = row[0] = true;
 
     for (int i = 1; i <= patternSize; i++) {
       char p = pattern.charAt(i - 1);
 
-      for (int j = 1; j <= textSize; j++) {
-        char t = text.charAt(j - 1);
-
+      for (int j = 0; j <= textSize; j++) {
         switch (p) {
           case '?':
-            table[i][j] = table[i - 1][j - 1];
+            row[j] = j > 0 && oldRow[j - 1];
             break;
           case '*':
-            table[i][j] = any(table[i - 1], j + 1);
+            row[j] = oldAny[j];
             break;
           default:
-            table[i][j] = table[i - 1][j - 1] && (p == t);
+            row[j] = j > 0 && oldRow[j - 1] && (p == text.charAt(j - 1));
         }
+
+        any[j] = row[j] || (j > 0 && any[j - 1]);
+      }
+
+      for (int j = 0; j <= textSize; j++) {
+        oldRow[j] = row[j];
+        oldAny[j] = any[j];
+        any[j] = row[j] = false;
       }
     }
 
-    return table[patternSize][textSize];
-  }
-
-  private boolean any(boolean[] array, int end) {
-    for (int i = 0; i < end; i++) {
-      if (array[i]) return true;
-    }
-    return false;
+    return oldRow[textSize];
   }
 }
