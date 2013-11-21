@@ -5,6 +5,7 @@ public class Solution {
     Solution s = new Solution();
     print(s.findSubstring("barfoothefoobarman", new String[] { "foo", "bar" }));
     print(s.findSubstring("a", new String[] { "a", "a" }));
+    print(s.findSubstring("lingmindraboofooowingdingbarrwingmonkeypoundcake", new String[] { "fooo","barr","wing","ding","wing" }));
   }
 
   static void print(List<Integer> list) {
@@ -14,50 +15,78 @@ public class Solution {
     System.out.println();
   }
 
-  public ArrayList<Integer> findSubstring(String S, String[] L) {
-    Map<String, Integer> words = new HashMap<String, Integer>();
+  public ArrayList<Integer> findSubstring(String text, String[] words) {
     ArrayList<Integer> indices = new ArrayList<Integer>();
-    if (L.length == 0) return indices;
-    int wordSize = L[0].length();
-    int totalSize = wordSize * L.length;
-
-    for (String word: L) {
-      Integer count = words.get(word);
-      if (count == null) words.put(word, 1);
-      else words.put(word, count + 1);
+    if (words.length == 0) {
+      return indices;
     }
 
-    for (int i = 0; i < S.length(); i++) {
-      if (isPossible(i, S, words, wordSize, totalSize)) indices.add(i);
+    int wordSize = words[0].length();
+    int concatSize = wordSize * words.length;
+
+    for (int i = 0; i < wordSize; i++) {
+      Map<String, Integer> map = new HashMap<String, Integer>();
+      for (String word: words) {
+        increment(map, word);
+      }
+
+      int concatEnd = i + concatSize;
+      if (concatEnd > text.length()) {
+        continue;
+      }
+
+      for (int j = i; j < concatEnd; j += wordSize) {
+        String word = text.substring(j, j + wordSize);
+        decrement(map, word);
+      }
+
+      if (map.size() == 0) {
+        indices.add(i);
+      }
+
+      for (int oldStart = i, oldEnd = oldStart + wordSize, newStart = concatEnd, newEnd = newStart + wordSize;
+        newEnd <= text.length();
+        oldStart = oldEnd, oldEnd += wordSize, newStart = newEnd, newEnd += wordSize) {
+
+        String oldWord = text.substring(oldStart, oldEnd);
+        String newWord = text.substring(newStart, newEnd);
+
+        increment(map, oldWord);
+        decrement(map, newWord);
+
+        if (map.size() == 0) {
+          indices.add(oldEnd);
+        }
+      }
     }
 
     return indices;
   }
 
-  boolean isPossible(int start, String text, Map<String, Integer> words, int wordSize, int totalSize) {
-    Map<String, Integer> seen = new HashMap<String, Integer>();
-    int totalEnd = start + totalSize;
+  void increment(Map<String, Integer> map, String key) {
+    adjustCount(map, key, true);
+  }
 
-    for (int i = start, end = i + wordSize;
-      i < text.length() && end <= text.length() && end <= totalEnd;
-      i = end, end += wordSize) {
+  void decrement(Map<String, Integer> map, String key) {
+    adjustCount(map, key, false);
+  }
 
-      String word = text.substring(i, end);
-      if (words.containsKey(word)) {
-        Integer count = seen.get(word);
-        if (count == null) seen.put(word, 1);
-        else seen.put(word, count + 1);
-      } else {
-        break;
-      }
+  void adjustCount(Map<String, Integer> map, String key, boolean increment) {
+    Integer count = map.get(key);
+    if (count == null) {
+      count = 0;
     }
 
-    if (seen.size() != words.size()) return false;
-    for (Map.Entry<String, Integer> entry: seen.entrySet()) {
-      Integer count = words.get(entry.getKey());
-      if (count == null) return false;
-      if (count != entry.getValue()) return false;
+    if (increment) {
+      count++;
+    } else {
+      count--;
     }
-    return true;
+
+    if (count == 0) {
+      map.remove(key);
+    } else {
+      map.put(key, count);
+    }
   }
 }
