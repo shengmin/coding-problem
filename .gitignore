@@ -13,3 +13,6 @@
 # IDEA
 .idea/workspace.xml
 out/
+
+# General
+*.out
