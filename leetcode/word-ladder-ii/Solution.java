@@ -56,12 +56,9 @@ public class Solution {
 
           queue.addLast(new ListNode(next, node));
           Set<String> nextNextList = nextMap.get(next);
-          if (nextNextList != null) {
-            nextNextList.remove(node.word);
-          }
+          if (nextNextList != null) nextNextList.remove(node.word);
+          visitedList.add(next);
         }
-
-        visitedList.add(node.word);
       }
       visited.addAll(visitedList);
       length++;
