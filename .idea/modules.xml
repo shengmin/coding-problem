@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/coding-problem.iml" filepath="$PROJECT_DIR$/coding-problem.iml" />
       <module fileurl="file://$PROJECT_DIR$/leetcode/regular-expression-matching/regular-expression-matching.iml" filepath="$PROJECT_DIR$/leetcode/regular-expression-matching/regular-expression-matching.iml" />
+      <module fileurl="file://$PROJECT_DIR$/leetcode/word-ladder/word-ladder.iml" filepath="$PROJECT_DIR$/leetcode/word-ladder/word-ladder.iml" />
     </modules>
   </component>
 </project>
