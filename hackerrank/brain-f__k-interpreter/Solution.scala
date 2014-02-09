@@ -17,8 +17,12 @@ object Solution {
   trait Instruction {
     protected def nextInstruction(env: Environment) = {
       env.executionCount += 1
-      if (env.executionCount >= 100000) PrintTimeOutInstruction
-      else if (env.instructionIndex >= env.instructions.size) null
+      if (env.instructionIndex >= env.instructions.size) null
+      else if (env.executionCount >= 100000) {
+        writer.println()
+        writer.print("PROCESS TIME OUT. KILLED!!!")
+        null
+      }
       else env.instructions(env.instructionIndex)
     }
 
@@ -28,14 +32,6 @@ object Solution {
       updateEnvironment(env)
       nextInstruction(env)
     }
-  }
-
-  object PrintTimeOutInstruction extends Instruction {
-    override protected def updateEnvironment(env: Environment) {
-      writer.println()
-      writer.print("PROCESS TIME OUT. KILLED!!!")
-    }
-    override protected def nextInstruction(env: Environment) = null
   }
 
   object RightArrow extends Instruction {

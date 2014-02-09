@@ -13,8 +13,8 @@ lazy val rangeMinimumQuery = newHackerRankProject(
 )
 
 lazy val brainF__kInterpreter = newHackerRankProject(
-  "brainF__kInterpreter", Seq(
-    version := "1.0.0"
+  "brain-f__k-interpreter", Seq(
+    version := "1.1.0"
   )
 )
 
