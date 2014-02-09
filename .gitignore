@@ -11,7 +11,9 @@
 *.hi
 
 # IDEA
-.idea/workspace.xml
+.idea/*
+!.idea/scala_settings.xml
+!.idea/codeStyleSettings.xml
 out/
 
 # General
