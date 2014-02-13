@@ -18,5 +18,7 @@ lazy val brainF__kInterpreter = newHackerRankProject(
   )
 )
 
+lazy val combinationSum = newLeetCodeProject("combination-sum")
+
 lazy val root = project.in(file("."))
-  .aggregate(rangeMinimumQuery, brainF__kInterpreter)
+  .aggregate(rangeMinimumQuery, brainF__kInterpreter, combinationSum)
