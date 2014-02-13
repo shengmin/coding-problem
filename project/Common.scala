@@ -32,4 +32,6 @@ object Common extends Build {
 
   def newHackerRankProject(name: String, settings: Seq[Setting[_]] = Seq.empty)
     = newProject("hackerrank", name, settings)
+
+  def newLeetCodeProject(name: String) = newProject("leetcode", name, Seq.empty)
 }
