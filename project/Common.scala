@@ -3,7 +3,7 @@ import sbt._
 
 object Common extends Build {
 
-  private[this] def commonSettings = Seq(
+  lazy val commonSettings = Defaults.defaultSettings ++ Seq(
     crossPaths := false,
     fork in run := true,
     scalaVersion := "2.10.3",
@@ -14,9 +14,7 @@ object Common extends Build {
       "-unchecked",
       "-target:jvm-1.6",
       "-encoding", "utf8"
-    ),
-    scalaSource in Compile := baseDirectory.value,
-    javaSource in Compile := baseDirectory.value
+    )
   )
 
   private[this] def newProject(
@@ -26,8 +24,12 @@ object Common extends Build {
   ) = {
     Project(
       id = s"${category}-${name}",
-      base = file(s"${category}/${name}")
-    ) settings ((commonSettings ++ settings): _*)
+      base = file(s"${category}/${name}"),
+      settings = commonSettings ++ Seq(
+        scalaSource in Compile := baseDirectory.value,
+        javaSource in Compile := baseDirectory.value
+      ) ++ settings
+    )
   }
 
   def newHackerRankProject(name: String, settings: Seq[Setting[_]] = Seq.empty)
