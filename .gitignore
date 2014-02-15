@@ -2,6 +2,10 @@
 *.exe
 *.pdb
 *.dll
+*.csproj.user
+*.suo
+bin/
+obj/
 
 # JVM
 *.class
@@ -18,6 +22,8 @@ out/
 
 # General
 *.out
+*.diff
+*.d
 
 # SBT
 target/
