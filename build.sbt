@@ -18,7 +18,17 @@ lazy val brainF__kInterpreter = newHackerRankProject(
   )
 )
 
+
+lazy val leetCodeCommonProject = newLeetCodeProject("common")
 lazy val combinationSum = newLeetCodeProject("combination-sum")
+lazy val copyListWithRandomPointer =
+  newLeetCodeProject("copy-list-with-random-pointer").dependsOn(leetCodeCommonProject)
 
 lazy val root = project.in(file("."))
-  .aggregate(rangeMinimumQuery, brainF__kInterpreter, combinationSum)
+  .aggregate(
+    rangeMinimumQuery,
+    brainF__kInterpreter,
+    combinationSum,
+    copyListWithRandomPointer,
+    leetCodeCommonProject
+  )

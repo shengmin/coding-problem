@@ -22,7 +22,7 @@ object Common extends Build {
   private[this] def newProject(
     category: String,
     name: String,
-    settings: Seq[Setting[_]]
+    settings: Seq[Setting[_]] = Seq.empty
   ) = {
     Project(
       id = s"${category}-${name}",
