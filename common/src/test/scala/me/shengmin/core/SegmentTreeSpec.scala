@@ -18,7 +18,7 @@ class SegmentTreeSpec extends FlatSpec with Matchers {
     for (i <- 0 until randomNumbers.size) {
       tree.update(i)(
         segment => randomNumbers(segment.start),
-        (left, right) => math.min(left.value, right.value)
+        (segment, left, right) => math.min(left.value, right.value)
       )
     }
 
