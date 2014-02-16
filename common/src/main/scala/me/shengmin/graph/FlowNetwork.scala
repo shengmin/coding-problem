@@ -7,16 +7,16 @@ class FlowNetwork(
   sinkReference: NodeReference
 ) {
 
-  private[graph] val nodes = mutable.HashMap.empty[NodeReference, Node]
-  private[graph] val source = nodes.getOrElseUpdate(sourceReference, Node(sourceReference))
-  private[graph] val sink = nodes.getOrElseUpdate(sinkReference, Node(sinkReference))
+  val nodes = mutable.HashMap.empty[NodeReference, Node]
+  val source = nodes.getOrElseUpdate(sourceReference, Node(sourceReference))
+  val sink = nodes.getOrElseUpdate(sinkReference, Node(sinkReference))
 
-  private[graph] case class OutgoingEdge(
+  case class OutgoingEdge(
     to: Node,
     var capacity: Int = 0
   )
 
-  private[graph] case class Node(id: NodeReference) {
+  case class Node(id: NodeReference) {
     val edges = mutable.LinkedHashMap.empty[Node, OutgoingEdge]
   }
 
@@ -101,4 +101,3 @@ class FlowNetwork(
     maxFlow
   }
 }
-

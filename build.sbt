@@ -32,6 +32,7 @@ lazy val numberOfBinarySearchTree =
 lazy val cuttingBoards = newHackerRankProject("cutting-boards").dependsOn(common)
 lazy val sherlockAndWatson = newHackerRankProject("sherlock-and-watson").dependsOn(common)
 lazy val makeItAnagram = newHackerRankProject("make-it-anagram").dependsOn(common)
+lazy val bikeRacers = newHackerRankProject("bike-racers").dependsOn(common)
 
 lazy val root = project.in(file("."))
   .aggregate(
@@ -40,5 +41,6 @@ lazy val root = project.in(file("."))
     brainF__kInterpreter,
     combinationSum,
     copyListWithRandomPointer,
-    leetCodeCommon
+    leetCodeCommon,
+    bikeRacers
   )
