@@ -31,6 +31,7 @@ lazy val numberOfBinarySearchTree =
   newHackerRankProject("number-of-binary-search-tree").dependsOn(common)
 lazy val cuttingBoards = newHackerRankProject("cutting-boards").dependsOn(common)
 lazy val sherlockAndWatson = newHackerRankProject("sherlock-and-watson").dependsOn(common)
+lazy val makeItAnagram = newHackerRankProject("make-it-anagram").dependsOn(common)
 
 lazy val root = project.in(file("."))
   .aggregate(
