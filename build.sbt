@@ -29,6 +29,7 @@ lazy val copyListWithRandomPointer =
   newLeetCodeProject("copy-list-with-random-pointer").dependsOn(leetCodeCommon)
 lazy val numberOfBinarySearchTree =
   newHackerRankProject("number-of-binary-search-tree").dependsOn(common)
+lazy val cuttingBoards = newHackerRankProject("cutting-boards").dependsOn(common)
 
 lazy val root = project.in(file("."))
   .aggregate(
