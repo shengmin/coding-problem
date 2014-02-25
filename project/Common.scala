@@ -14,6 +14,9 @@ object Common extends Build {
       "-unchecked",
       "-target:jvm-1.6",
       "-encoding", "utf8"
+    ),
+    libraryDependencies ++= Seq(
+      "org.scalatest" % "scalatest_2.10" % "2.0" % "test"
     )
   )
 
