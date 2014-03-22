@@ -38,6 +38,7 @@ lazy val swapNodes = newHackerRankProject("swap-nodes").dependsOn(common)
 lazy val reverseFactorization = newHackerRankProject("reverse-factorization").dependsOn(common)
 lazy val substringSearching = newHackerRankProject("substring-searching").dependsOn(common)
 lazy val commonDivisors = newHackerRankProject("common-divisors").dependsOn(common)
+lazy val stringOPermute = newHackerRankProject("string-o-permute").dependsOn(common)
 
 lazy val root = project.in(file("."))
   .aggregate(
@@ -52,5 +53,6 @@ lazy val root = project.in(file("."))
     swapNodes,
     reverseFactorization,
     substringSearching,
-    commonDivisors
+    commonDivisors,
+    stringOPermute
   )
