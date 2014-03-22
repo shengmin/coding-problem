@@ -35,6 +35,7 @@ lazy val makeItAnagram = newHackerRankProject("make-it-anagram").dependsOn(commo
 lazy val bikeRacers = newHackerRankProject("bike-racers").dependsOn(common)
 lazy val libraryQuery = newHackerRankProject("library-query").dependsOn(common)
 lazy val swapNodes = newHackerRankProject("swap-nodes").dependsOn(common)
+lazy val reverseFactorization = newHackerRankProject("reverse-factorization").dependsOn(common)
 
 lazy val root = project.in(file("."))
   .aggregate(
@@ -46,5 +47,6 @@ lazy val root = project.in(file("."))
     leetCodeCommon,
     bikeRacers,
     libraryQuery,
-    swapNodes
+    swapNodes,
+    reverseFactorization
   )
