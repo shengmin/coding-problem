@@ -1,0 +1,32 @@
+Mario and Luigi are partners at a very famous game store. They are also expert in a game where they have to save the princess from the clutches of a dragon. While achieving this objective, they passes through many difficulties, sometime easy sometime hard. For clearing each difficuly they get some points. A player’s point after the game is the total of all these points.
+
+Let’s denote Mario’s points by M and that of Luigi by L. Now Princess Peach is wondering how many postive integers are there that are divisor to both number, M and L. Help her in the same.
+
+Input
+First line of input contains an integer, T, which represent the number of test cases. Then follows T lines. Each line contains two space separated integers, M L, representing the points earned by Mario and Luigi, respectively.
+
+Output
+For each test case, print the solution in different lines.
+
+Constraints
+1 <= T <= 10
+1 <= L, M <= 10^8
+L, M are integers
+
+Sample Input
+
+3
+10 4
+1 100
+288 240
+Sample Output
+
+2
+1
+10
+Explanation
+Test Case #00: Divisors of M = 10 are {1,2,5,10}, while for L = 4 they are {1, 2, 4}. So M and L shares {1, 2} as their common divisors.
+
+Test Case #01: Here as M = 1, both players only share this number as their divisor.
+
+Test Case #02: Here M and L shares 10 integers, {1,2,3,4,6,8,12,16,24,48}, as their divisors.

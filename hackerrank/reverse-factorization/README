@@ -1,0 +1,65 @@
+At the time when Pythagoreanism was prevalent, people were also focused on different ways to factorize a number. In one class, Pythagoreas asked his disciples to solve one such problem, Reverse Factorization. They were given a set of integer, A = {a1, a2,…, aK}, and an integer N. They need to find the a way to reach N, starting from 1, and at each step multiplying current value by any element of A. But soon they realise that there may exist more than one way to reach N. So they decided to find a way in which number of states are least. All of sudden they started on this new problem. People solved it and then started shouting their answer. CRAP!!!. There still exists multiple answers. So finally after much consideration, they settled on the lexicographically smallest series among those solutions which contains the least number of states.
+
+For example, if N = 12 and A = {2, 3, 4} then following ways exists
+
+(a) 1  ->  2  ->  4  ->  12
+       x2     x2     x3
+
+(b) 1  ->  4  ->  12
+       x4     x3
+
+(c) 1  ->  3  ->  12
+       x3     x4
+Here (a) is not the minimal state, as it has 4 states in total. While (b) and (c) are contenders for answer, both having 3 states, (c) is lexicographically smaller than (b) so it is the answer. In this case you have to print 1 3 12. If there exists no way to reach N print -1.
+
+Input
+Input contains two lines where first line contains two space separated integer, N K, representing the final value to reach and the size of set A, respectively. Next line contains K space integers representing the set A = {a1, a2,…, aK}.
+
+Output
+Print the steps to reach N if it exists. Otherwise print -1.
+
+Constraints
+1 ≤ N ≤ 109
+1 ≤ K ≤ 20
+2 ≤ ai ≤ 20, where i ∈ [1..K]
+ai ≠ aj, where 1 <= i, j <= K AND i ≠ j
+
+Note:
+If list1 = [p1, p2, …pm] and list2 = [q1, q2,…qn] are two ordered lists, then list1 is lexicographically smaller than list2 if any one of the following condition satisfies.
+
+pi = qi, for i ∈ [1..m] AND m < n.
+pi = qi, for i ∈ [1..k] AND k < min(m, n) AND pk+1 < qk+1.
+Sample Input #00
+
+12 3
+2 3 4
+Sample Output #00
+
+1 3 12
+Sample Input #01
+
+15 5
+2 10 6 9 11
+Sample Output #01
+
+-1
+Sample Input #02
+
+72 8
+2 4 6 9 3 7 16 10 5
+Sample Output #02
+
+1 2 8 72
+Explanation
+Test Case #00: This is the same case which is explaned above.
+Test Case #01: Here no way exists so that we can reach 15 starting from 1.
+Test Case #02: There are multiple ways to reach 72 using these 8 numbers. Out of which following 6 ways consists of minimal states (4).
+
+    States      =>  Multiplication operation
+ 1   9  18  72  =>      (x9, x2, x4)
+ 1   4  36  72  =>      (x4, x9, x2)
+ 1   2   8  72  =>      (x2, x4, x9)
+ 1   2  18  72  =>      (x2, x9, x4)
+ 1   4   8  72  =>      (x4, x2, x9)
+ 1   9  36  72  =>      (x9, x4, x2)
+As series 1 2 8 72 is lexicographically smallest, it is the answer.
