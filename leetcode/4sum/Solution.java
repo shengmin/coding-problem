@@ -28,51 +28,48 @@ public class Solution {
   }
 
   class Elements {
-    Set<Element> elements = new LinkedHashSet<Element>();
-    int sum = 0;
+    Element first, second;
+    int sum;
 
-    Elements add(Element element) {
-      elements.add(element);
-      sum += element.value;
-      return this;
+    Elements(Element first, Element second) {
+      this.first = first;
+      this.second = second;
+      sum = first.value + second.value;
     }
 
     boolean hasDuplicates(Elements other) {
-      for (Element element: other.elements) {
-        if (elements.contains(element)) {
-          return true;
-        }
-      }
-      return false;
+      return first.equals(other.first)
+        || first.equals(other.second)
+        || second.equals(other.first)
+        || second.equals(other.second);
     }
 
     @Override
     public String toString() {
-      String text = sum + " = ";
-      for (Element element: elements) {
-        text += " " + element;
-      }
-      return text;
+      return sum + " = " + first + " " + second;
     }
   }
 
   public ArrayList<ArrayList<Integer>> fourSum(int[] nums, int target) {
     ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
-    Map<Integer, List<Elements>> twoSums = new LinkedHashMap<Integer, List<Elements>>();
+    Map<Integer, List<Elements>> twoSums = new HashMap<Integer, List<Elements>>();
+    Element[] elements = new Element[nums.length];
+
+    for (int i = 0; i < nums.length; i++) {
+      elements[i] = new Element(i, nums[i]);
+    }
 
     for (int i = 0; i < nums.length; i++) {
       int a = nums[i];
-      Element aElement = new Element(i, nums[i]);
+      Element aElement = elements[i];
       for (int j = i + 1; j < nums.length; j++) {
         int b = nums[j];
         int sum = a + b;
         List<Elements> list = twoSums.get(sum);
         if (list == null) {
-          list = new ArrayList<Elements>();
+          list = new LinkedList<Elements>();
         }
-        list.add(new Elements()
-          .add(aElement)
-          .add(new Element(j, b)));
+        list.add(new Elements(aElement, elements[j]));
         twoSums.put(sum, list);
       }
     }
@@ -87,12 +84,10 @@ public class Solution {
           for (Elements right: rightList) {
             if (!left.hasDuplicates(right)) {
               ArrayList<Integer> newResult = new ArrayList<Integer>(4);
-              for (Element e: left.elements) {
-                newResult.add(e.value);
-              }
-              for (Element e: right.elements) {
-                newResult.add(e.value);
-              }
+              newResult.add(left.first.value);
+              newResult.add(left.second.value);
+              newResult.add(right.first.value);
+              newResult.add(right.second.value);
               Collections.sort(newResult);
               builder.setLength(0);
               for (int i: newResult) {
