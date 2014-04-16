@@ -39,6 +39,8 @@ lazy val reverseFactorization = newHackerRankProject("reverse-factorization").de
 lazy val substringSearching = newHackerRankProject("substring-searching").dependsOn(common)
 lazy val commonDivisors = newHackerRankProject("common-divisors").dependsOn(common)
 lazy val stringOPermute = newHackerRankProject("string-o-permute").dependsOn(common)
+lazy val codility3 = newCodilityProject("03")
+lazy val codility4 = newCodilityProject("04")
 
 lazy val root = project.in(file("."))
   .aggregate(
@@ -54,5 +56,7 @@ lazy val root = project.in(file("."))
     reverseFactorization,
     substringSearching,
     commonDivisors,
-    stringOPermute
+    stringOPermute,
+    codility3,
+    codility4
   )
