@@ -3,6 +3,7 @@ import java.util.*;
 public class Solution {
   public int jump(int[] jumps) {
     if (jumps.length == 0) return 0;
+    if (jumps.length == 1) return 0;
 
     int lastIndex = jumps.length - 1;
     boolean[] visited = new boolean[jumps.length];
@@ -15,20 +16,16 @@ public class Solution {
       int queueSize = queue.size();
       for (int i = 0; i < queueSize; i++) {
         int index = queue.removeFirst();
-        if (index == lastIndex) {
-          return stepCount;
+        int maxIndex = Math.min(index + jumps[index], lastIndex);
+        if (maxIndex == lastIndex) {
+          return stepCount + 1;
         }
 
-        int maxJump = jumps[index];
-        for (int jump = 1; jump <= maxJump; jump++) {
-          int newIndex = index + jump;
-          if (newIndex >= jumps.length) {
-            break;
-          }
-          if (!visited[newIndex]) {
-            visited[newIndex] = true;
-            queue.addLast(newIndex);
-          }
+        for (int newIndex = maxIndex; newIndex > index; newIndex--) {
+          if (visited[newIndex]) break;
+
+          visited[newIndex] = true;
+          queue.addLast(newIndex);
         }
       }
 
