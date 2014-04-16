@@ -39,4 +39,6 @@ object Common extends Build {
     = newProject("hackerrank", name, settings)
 
   def newLeetCodeProject(name: String) = newProject("leetcode", name, Seq.empty)
+
+  def newCodilityProject(name: String) = newProject("codility", name, Seq())
 }
