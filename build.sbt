@@ -41,6 +41,7 @@ lazy val commonDivisors = newHackerRankProject("common-divisors").dependsOn(comm
 lazy val stringOPermute = newHackerRankProject("string-o-permute").dependsOn(common)
 lazy val codility3 = newCodilityProject("03")
 lazy val codility4 = newCodilityProject("04")
+lazy val leetCode1 = newLeetCodeProject("recover-binary-search-tree").dependsOn(leetCodeCommon)
 
 lazy val root = project.in(file("."))
   .aggregate(
@@ -58,5 +59,6 @@ lazy val root = project.in(file("."))
     commonDivisors,
     stringOPermute,
     codility3,
-    codility4
+    codility4,
+    leetCode1
   )
