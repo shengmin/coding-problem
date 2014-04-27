@@ -1,3 +1,8 @@
+/**
+ * - Find the violating node
+ * - Either the violating node is misplaced or the node that sets the bound is misplaced
+ * - Try swapping violating node/bounding node with every other node to see if it forms a binary search tree
+ */
 public class Solution {
 
   class Tuple {
