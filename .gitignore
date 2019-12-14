@@ -9,6 +9,7 @@ obj/
 
 # JVM
 *.class
+*.jar
 
 # C/C++
 *.o
@@ -27,3 +28,9 @@ out/
 
 # SBT
 target/
+
+# Kotlin
+*.kotlin_module
+
+# MacOS
+.DS_Store
