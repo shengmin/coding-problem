@@ -19,8 +19,8 @@ import kotlin.text.*
 
 // Complete the staircase function below.
 fun staircase(n: Int): Unit {
-  for (i in 1 to n) {
-    for (j in 0 until n - 1) {
+  for (i in 1..n) {
+    for (j in 1..n - i) {
       print(" ")
     }
     for (j in 0 until i) {
